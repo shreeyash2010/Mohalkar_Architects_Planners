@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enquiry – MOHALKAR Architects & Planners</title>
+  <link rel="icon" href="/images/logo2.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SheetJS for Excel export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="inner-page">
+
+<div id="nav-slot"></div>
+
+<!-- ── PAGE HERO ─────────────────────────────── -->
+<section class="page-hero enquiry-hero">
+  <div class="page-hero-bg" style="background-image:url('/images/hugo-sousa-BghGseQbAkA-unsplash.jpg');"></div>
+  <div class="page-hero-overlay" style="background:linear-gradient(180deg,rgba(10,10,10,0.82) 0%,rgba(10,10,10,0.5) 100%);"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-eyebrow">Let's Connect</span>
+    <h1 class="page-hero-title">Get In Touch</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="/index.html">Home</a></li>
+        <li class="breadcrumb-item active">Enquiry</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<!-- ── ENQUIRY BODY ───────────────────────────── -->
+<section class="inner-section enquiry-section">
+  <div class="container-xl">
+    <div class="row g-5 align-items-start">
+
+      <!-- LEFT: Contact info panel -->
+      <div class="col-lg-4" data-reveal="left">
+        <div class="enquiry-info-panel">
+          <span class="section-label">Direct Contact</span>
+          <h2 class="section-heading" style="font-size:clamp(1.8rem,3vw,2.4rem); margin-bottom:2rem;">We'd Love to<br>Hear From You</h2>
+
+          <div class="eq-info-item">
+            <div class="eq-info-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <p class="eq-info-label">Phone</p>
+              <a href="tel:+919146079235" class="eq-info-val">+91 9146079235</a>
+            </div>
+          </div>
+
+          <div class="eq-info-item">
+            <div class="eq-info-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <p class="eq-info-label">Email</p>
+              <a href="mailto:mohalkararchitectsandplanners@gmail.com" class="eq-info-val">mohalkararchitectsandplanners@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="eq-info-item">
+            <div class="eq-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <p class="eq-info-label">Studio</p>
+              <span class="eq-info-val">(Pune,Thane&Dharashiv), Maharashtra, India</span>
+            </div>
+          </div>
+
+          <div class="eq-info-item">
+            <div class="eq-info-icon"><i class="bi bi-clock-fill"></i></div>
+            <div>
+              <p class="eq-info-label">Working Hours</p>
+              <span class="eq-info-val">Mon – Sat · 10 AM – 7 PM</span>
+            </div>
+          </div>
+
+          <div class="eq-social mt-4">
+            <p class="eq-info-label mb-2">Follow Our Work</p>
+            <div class="d-flex gap-3">
+              <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" class="eq-social-btn"><i class="bi bi-instagram"></i></a>
+              <a href="https://linkedin.com/in/" target="_blank" class="eq-social-btn"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <!-- Stats mini -->
+          <div class="eq-stats-row mt-4">
+            <div class="eq-stat">
+              <div class="eq-stat-num">24h</div>
+              <div class="eq-stat-txt">Response Time</div>
+            </div>
+            <div class="eq-stat">
+              <div class="eq-stat-num">25+</div>
+              <div class="eq-stat-txt">Projects Done</div>
+            </div>
+            <div class="eq-stat">
+              <div class="eq-stat-num">5+</div>
+              <div class="eq-stat-txt">Cities Served</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Enquiry form -->
+      <div class="col-lg-8" data-reveal="right">
+        <div class="enquiry-form-card">
+          <div class="mb-4">
+            <span class="section-label">Project Enquiry</span>
+            <h3 class="section-heading" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">Tell Us About<br>Your Project</h3>
+            <p class="section-body mt-2">Share a few details and we'll get back to you with ideas, timelines, and next steps.</p>
+          </div>
+
+          <form id="enquiryForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="enquiryName" class="form-label">Full Name *</label>
+                <input type="text" id="enquiryName" name="name" class="form-control" placeholder="Rahul Sharma" required />
+              </div>
+              <div class="col-md-6">
+                <label for="enquiryEmail" class="form-label">Email Address *</label>
+                <input type="email" id="enquiryEmail" name="email" class="form-control" placeholder="rahul@example.com" required />
+              </div>
+              <div class="col-md-6">
+                <label for="enquiryPhone" class="form-label">Phone Number *</label>
+                <input type="tel" id="enquiryPhone" name="phone" class="form-control" placeholder="+91 98765 43210" required />
+              </div>
+              <div class="col-md-6">
+                <label for="enquiryLocation" class="form-label">Project Location *</label>
+                <input type="text" id="enquiryLocation" name="location" class="form-control" placeholder="Mumbai, Maharashtra" required />
+              </div>
+              <div class="col-md-6">
+                <label for="enquiryType" class="form-label">Project Type</label>
+                <select id="enquiryType" name="type" class="form-select">
+                  <option value="">Select project type…</option>
+                  <option value="residential">Residential</option>
+                  <option value="commercial">Commercial</option>
+                  <option value="interior">Interior Design</option>
+                  <option value="urban-planning">Urban / Landscape</option>
+                  <option value="3d-viz">3D Visualization Only</option>
+                  <option value="consultancy">Project Consultancy</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="enquiryBudget" class="form-label">Approximate Budget</label>
+                <select id="enquiryBudget" name="budget" class="form-select">
+                  <option value="">Prefer not to say</option>
+                  <option value="under-10L">Under ₹10 Lakhs</option>
+                  <option value="10-50L">₹10 – 50 Lakhs</option>
+                  <option value="50L-1Cr">₹50 Lakhs – 1 Crore</option>
+                  <option value="1-5Cr">₹1 – 5 Crore</option>
+                  <option value="5Cr+">₹5 Crore+</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="enquiryMessage" class="form-label">Project Details *</label>
+                <textarea id="enquiryMessage" name="message" class="form-control" rows="5"
+                  placeholder="Describe your project — what are you building, what style inspires you, what are your goals…" required></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label d-block">How did you hear about us?</label>
+                <div class="d-flex flex-wrap gap-2">
+                  <label class="source-check"><input type="radio" name="source" value="instagram" /> Instagram</label>
+                  <label class="source-check"><input type="radio" name="source" value="linkedin" /> LinkedIn</label>
+                  <label class="source-check"><input type="radio" name="source" value="referral" /> Referral</label>
+                  <label class="source-check"><input type="radio" name="source" value="google" /> Google</label>
+                  <label class="source-check"><input type="radio" name="source" value="other" /> Other</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 flex-wrap mt-4">
+              <button type="submit" class="btn btn-gold px-5 py-3">
+                Send Enquiry &nbsp;<i class="bi bi-send-fill"></i>
+              </button>
+              <button type="button" id="downloadEnquiryExcel" class="btn btn-outline-secondary px-4 py-3">
+                Download Records &nbsp;<i class="bi bi-file-earmark-excel-fill"></i>
+              </button>
+              <span id="enquiryStatus" class="enquiry-status" aria-live="polite"></span>
+            </div>
+
+            <p class="form-note mt-3"><i class="bi bi-lock-fill me-1"></i>Your details are private and will never be shared with third parties.</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY CHOOSE US ──────────────────────────── -->
+<section class="inner-section why-section">
+  <div class="container-xl">
+    <div class="text-center mb-5" data-reveal="up">
+      <span class="section-label">Why Mohalkar</span>
+      <h2 class="section-heading">Why Work With Us</h2>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4" data-reveal="up" data-delay="0">
+        <div class="why-card">
+          <i class="bi bi-chat-heart why-icon"></i>
+          <h5 class="why-title">Client-First Approach</h5>
+          <p class="why-text">We listen before we design. Your goals, lifestyle, and budget shape every decision — not trends or personal preferences.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-reveal="up" data-delay="100">
+        <div class="why-card">
+          <i class="bi bi-lightbulb why-icon"></i>
+          <h5 class="why-title">Creative Rigour</h5>
+          <p class="why-text">We don't separate creativity from technical accuracy. Beautiful designs that also work — on paper and in reality.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-reveal="up" data-delay="200">
+        <div class="why-card">
+          <i class="bi bi-arrow-repeat why-icon"></i>
+          <h5 class="why-title">End-to-End Partnership</h5>
+          <p class="why-text">We stay with you from the first sketch to the final handover. No handoffs, no silos — one team, fully accountable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-slot"></div>
+
+<!-- Lightbox placeholder (not used here, but included for script compatibility) -->
+<div id="lightbox" style="display:none;">
+  <span id="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<a href="https://wa.me/919146079235?text=Hello%20Mohalkar%20Architects-Planners,%20I%20would%20like%20to%20discuss%20a%20project!"
+  class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat with us on WhatsApp">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<script src="/javascript/components.js"></script>
+<script src="/javascript/script.js" defer></script>
+</body>
+</html>
