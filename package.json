@@ -3,7 +3,15 @@
   "private": true,
   "version": "1.0.0",
   "description": "Mohalkar Architects website",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo \"Build complete\"",
+    "lint": "node --check server.js api/send-enquiry.js javascript/components.js javascript/script.js"
+  },
   "dependencies": {
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
     "nodemailer": "^6.9.14",
     "xlsx": "^0.18.5"
   }
