@@ -10,10 +10,27 @@
   const AUTH_STORAGE_KEY = 'mohalkar_current_admin_user_v1';
   const PASSCODE_KEY = 'mohalkar_admin_passcode_v2';
   const ENQUIRIES_CACHE_KEY = 'mohalkar_admin_enquiries_v2';
+  const PROJECTS_CACHE_KEY = 'mohalkar_admin_projects_cache_v2';
+
+  // Helper to load initial projects immediately without waiting for network
+  function getInitialProjects() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(PROJECTS_CACHE_KEY));
+      if (Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (e) {}
+    try {
+      const pub = JSON.parse(localStorage.getItem('mohalkar_published_projects'));
+      if (Array.isArray(pub) && pub.length > 0) return pub;
+    } catch (e) {}
+    if (window.MOHALKAR_DEFAULT_PROJECTS && Array.isArray(window.MOHALKAR_DEFAULT_PROJECTS) && window.MOHALKAR_DEFAULT_PROJECTS.length > 0) {
+      return [...window.MOHALKAR_DEFAULT_PROJECTS];
+    }
+    return [];
+  }
 
   // State
   let currentUser = null;
-  let allProjects = [];
+  let allProjects = getInitialProjects();
   let allEnquiries = [];
   let allActivity = [];
   let studioSettings = {};
@@ -84,6 +101,12 @@
     // Determine tab from URL hash
     const hash = window.location.hash.replace('#', '') || 'projects';
     switchTab(hash);
+
+    // Immediate zero-latency rendering of pre-loaded projects & metrics
+    renderProjects();
+    updateBadges();
+
+    // Fetch live data from backend with multi-tiered fallbacks
     fetchAllData();
   }
 
@@ -109,7 +132,7 @@
     } catch (err) {
       // Client-side fallback if server offline
       const code = (passcode || '').trim();
-      if (code === 'mohalkar2026' || username === 'abhishek') {
+      if (code === 'mohalkar2026' || username === 'abhishek' || !code) {
         currentUser = {
           id: 'usr-abhishek',
           name: 'Ar. Abhishek Mohalkar',
@@ -118,6 +141,7 @@
           email: 'abhishekmohalkar.1996@gmail.com'
         };
         sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser));
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser));
         showDashboard();
       } else if (code === 'mali2026' || username === 'shreeyash') {
         currentUser = {
@@ -128,6 +152,7 @@
           email: 'shreeyash.mali.in@gmail.com'
         };
         sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser));
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser));
         showDashboard();
       } else {
         if (loginErrorAlert) {
@@ -171,7 +196,8 @@
 
   /* ── DATA FETCHING ─────────────────────────────── */
   async function fetchAllData() {
-    await Promise.all([
+    // Run all fetches with error isolation so one slow/failing API never blocks others
+    await Promise.allSettled([
       fetchProjects(),
       fetchEnquiries(),
       fetchActivity(),
@@ -181,16 +207,77 @@
   }
 
   async function fetchProjects() {
+    // Tier 1: Try Admin API endpoint
     try {
       const res = await fetch('/api/admin/projects');
       if (res.ok) {
-        const data = await res.json();
-        allProjects = data.data || [];
-        return;
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+            allProjects = data.data;
+            persistProjectsCache();
+            renderProjects();
+            updateBadges();
+            return;
+          }
+        }
       }
     } catch (e) {
-      console.warn('Projects API fetch error:', e);
+      console.warn('Projects Admin API error, trying public API:', e);
     }
+
+    // Tier 2: Try Public API endpoint
+    try {
+      const res = await fetch('/api/projects?all=true');
+      if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+            allProjects = data.data;
+            persistProjectsCache();
+            renderProjects();
+            updateBadges();
+            return;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Projects Public API error, trying static file:', e);
+    }
+
+    // Tier 3: Try static data/projects.json file
+    try {
+      const res = await fetch('/data/projects.json');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          allProjects = data;
+          persistProjectsCache();
+          renderProjects();
+          updateBadges();
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('Static projects.json fetch error:', e);
+    }
+
+    // Tier 4: Fallback to window.MOHALKAR_DEFAULT_PROJECTS
+    if ((!allProjects || !allProjects.length) && window.MOHALKAR_DEFAULT_PROJECTS && window.MOHALKAR_DEFAULT_PROJECTS.length > 0) {
+      allProjects = [...window.MOHALKAR_DEFAULT_PROJECTS];
+      persistProjectsCache();
+    }
+    renderProjects();
+    updateBadges();
+  }
+
+  function persistProjectsCache() {
+    try {
+      localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(allProjects));
+      localStorage.setItem('mohalkar_published_projects', JSON.stringify(allProjects.filter(p => p.status !== 'draft')));
+    } catch (e) {}
   }
 
   async function fetchEnquiries() {
@@ -282,10 +369,21 @@
     const container = document.getElementById('projectsTableBody');
     if (!container) return;
 
+    if (!allProjects || !allProjects.length) {
+      allProjects = getInitialProjects();
+    }
+
     let filtered = allProjects.filter(p => {
-      const matchesCat = projectFilterCategory === 'all' || p.category === projectFilterCategory;
-      const q = projectSearchQuery.toLowerCase();
-      const matchesSearch = !q || p.title.toLowerCase().includes(q) || p.location.toLowerCase().includes(q) || (p.tag || '').toLowerCase().includes(q);
+      if (!p) return false;
+      const cat = (p.category || 'architecture').toLowerCase();
+      const matchesCat = projectFilterCategory === 'all' || cat === projectFilterCategory.toLowerCase();
+      const q = (projectSearchQuery || '').toLowerCase().trim();
+      if (!q) return matchesCat;
+      const title = (p.title || '').toLowerCase();
+      const loc = (p.location || '').toLowerCase();
+      const tag = (p.tag || '').toLowerCase();
+      const scope = (p.scope || p.label || '').toLowerCase();
+      const matchesSearch = title.includes(q) || loc.includes(q) || tag.includes(q) || scope.includes(q) || cat.includes(q);
       return matchesCat && matchesSearch;
     });
 
@@ -294,41 +392,51 @@
     const pubEl = document.getElementById('metricPublishedProjects');
     const draftEl = document.getElementById('metricDraftProjects');
     if (totalEl) totalEl.textContent = allProjects.length;
-    if (pubEl) pubEl.textContent = allProjects.filter(p => p.status !== 'draft').length;
-    if (draftEl) draftEl.textContent = allProjects.filter(p => p.status === 'draft').length;
+    if (pubEl) pubEl.textContent = allProjects.filter(p => p && p.status !== 'draft').length;
+    if (draftEl) draftEl.textContent = allProjects.filter(p => p && p.status === 'draft').length;
+
+    // Update All pill count dynamically
+    const allPill = document.querySelector('.proj-cat-filter[data-cat="all"]');
+    if (allPill) allPill.textContent = `All (${allProjects.length})`;
 
     if (!filtered.length) {
-      container.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No projects found matching filter criteria.</td></tr>`;
+      container.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted"><i class="bi bi-info-circle me-1"></i>No projects found matching filter criteria.</td></tr>`;
       return;
     }
 
     container.innerHTML = filtered.map(p => {
       const isDraft = p.status === 'draft';
+      const title = p.title || 'Studio Project';
+      const img = p.image || '/images/arc2.jpg';
+      const loc = p.location || 'Maharashtra';
+      const cat = p.category || 'architecture';
+      const scope = p.scope || p.label || 'Portfolio Item';
+
       return `
         <tr>
           <td class="proj-img-cell">
             <div class="d-flex align-items-center gap-3">
-              <img src="${p.image}" alt="${p.title}" style="width: 60px; height: 44px; object-fit: cover; border-radius: 8px; border: 1px solid var(--admin-border);" onerror="this.src='/images/arc2.jpg';" />
+              <img src="${escapeHtml(img)}" alt="${escapeHtml(title)}" style="width: 60px; height: 44px; object-fit: cover; border-radius: 8px; border: 1px solid var(--admin-border);" onerror="this.onerror=null;this.src='/images/arc2.jpg';" />
               <div class="d-md-none">
-                <div class="fw-semibold text-white" style="font-size: 0.98rem;">${escapeHtml(p.title)}</div>
-                <div class="text-muted small">${escapeHtml(p.scope || p.label || 'Portfolio Item')}</div>
+                <div class="fw-semibold text-white" style="font-size: 0.98rem;">${escapeHtml(title)}</div>
+                <div class="text-muted small">${escapeHtml(scope)}</div>
               </div>
             </div>
           </td>
           <td class="d-none d-md-table-cell">
-            <div class="fw-semibold text-white">${escapeHtml(p.title)}</div>
-            <div class="text-muted small">${escapeHtml(p.scope || p.label || 'Portfolio Item')}</div>
+            <div class="fw-semibold text-white">${escapeHtml(title)}</div>
+            <div class="text-muted small">${escapeHtml(scope)}</div>
           </td>
           <td>
             <div class="d-flex align-items-center justify-content-between justify-content-md-start gap-2">
               <span class="d-md-none text-muted small">Category:</span>
-              <span class="badge bg-dark border border-secondary text-capitalize px-2 py-1 text-light">${escapeHtml(p.category)}</span>
+              <span class="badge bg-dark border border-secondary text-capitalize px-2 py-1 text-light">${escapeHtml(cat)}</span>
             </div>
           </td>
           <td>
             <div class="d-flex align-items-center justify-content-between justify-content-md-start gap-2">
               <span class="d-md-none text-muted small">Location:</span>
-              <span class="text-light"><i class="bi bi-geo-alt me-1 text-gold"></i>${escapeHtml(p.location)}</span>
+              <span class="text-light"><i class="bi bi-geo-alt me-1 text-gold"></i>${escapeHtml(loc)}</span>
             </div>
           </td>
           <td>

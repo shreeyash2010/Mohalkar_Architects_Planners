@@ -205,6 +205,7 @@ app.delete('/api/admin/enquiries/:id', (req, res) => {
 
 // ── Public Projects API (Consumed by live website projects.html) ──
 app.get('/api/projects', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   const projects = readJson('projects.json', []);
   const showAll = req.query.all === 'true';
   const data = showAll ? projects : projects.filter(p => p.status !== 'draft');
@@ -213,6 +214,7 @@ app.get('/api/projects', (req, res) => {
 
 // ── Projects Management ──
 app.get('/api/admin/projects', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   const projects = readJson('projects.json', []);
   res.json({ success: true, count: projects.length, data: projects });
 });
