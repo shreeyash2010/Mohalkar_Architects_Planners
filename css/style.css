@@ -416,15 +416,62 @@ iframe {
 }
 .expertise-card:hover::before { width: 100%; }
 .exp-icon {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: rgba(200,169,110,0.1);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 24px;
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  background: rgba(200, 169, 110, 0.12);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(200, 169, 110, 0.12);
 }
 .exp-icon i {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--gold);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.expertise-card:hover .exp-icon {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 10px 24px rgba(200, 169, 110, 0.45);
+}
+.expertise-card:hover .exp-icon i {
+  color: #0c0d11;
+}
+.exp-card-number {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: rgba(200, 169, 110, 0.25);
+  line-height: 1;
+  transition: color var(--transition);
+}
+.expertise-card:hover .exp-card-number {
+  color: rgba(200, 169, 110, 0.7);
+}
+.exp-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 20px;
+}
+.exp-tag-pill {
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.05);
+  color: var(--dark3);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 .exp-title {
   font-family: var(--font-serif);

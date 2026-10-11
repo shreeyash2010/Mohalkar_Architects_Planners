@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Admin Portal | Mohalkar Architects & Planners</title>
+  <meta name="description" content="Secure executive management console for Mohalkar Architects & Planners: portfolio pipeline, client CRM leads, telemetry analytics, and site health." />
+  <link rel="icon" href="/images/logo2.png" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+
+  <!-- SheetJS for Excel Exports -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="admin-body">
+
+  <!-- ═══════════════════════════════════════════════════
+       1. LOGIN SECTION (EXECUTIVE ACCESS GATE)
+  ═══════════════════════════════════════════════════ -->
+  <section id="adminLoginSection" class="admin-login-wrap">
+    <div class="login-card text-center">
+      <img src="/images/logo.jpg" alt="Mohalkar Crest" class="brand-crest mb-3" onerror="this.src='/images/logo2.png';" />
+      
+      <div class="brand-title text-gold font-serif" style="font-size: 1.65rem; letter-spacing: 0.15em;">MOHALKAR</div>
+      <div class="brand-sub text-muted small" style="letter-spacing: 0.2em; font-size: 0.72rem; margin-bottom: 1.5rem;">ARCHITECTS &amp; PLANNERS</div>
+      
+      <h4 class="text-white fw-bold mb-1 font-serif" style="font-size: 1.45rem;">Executive Studio Console</h4>
+      <p class="text-muted small mb-4">Authorized Access Only · Dharashiv · Pune · Thane · Bhoom</p>
+      
+      <div id="loginErrorAlert" class="alert alert-danger py-2 px-3 small d-none" role="alert"></div>
+
+      <form id="adminLoginForm">
+        <div class="mb-3 text-start">
+          <label class="form-label text-muted small fw-semibold">Master Security Passcode</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-secondary text-gold"><i class="bi bi-shield-lock"></i></span>
+            <input type="password" id="loginPasscode" class="form-control admin-input" placeholder="Enter master passcode" required autocomplete="current-password" autofocus />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-gold-solid w-100 justify-content-center py-2 mb-3">
+          Authenticate &amp; Enter Console &nbsp;<i class="bi bi-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="mt-4 pt-2">
+        <a href="/index.html" class="text-muted small text-decoration-none">
+          <i class="bi bi-arrow-left me-1"></i>Return to Public Website
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       2. DASHBOARD SECTION (AUTHENTICATED)
+  ═══════════════════════════════════════════════════ -->
+  <section id="adminDashboardSection" class="d-none">
+
+    <!-- Header Navigation -->
+    <header class="admin-header py-3 px-3 px-lg-4">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <a href="/index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+            <img src="/images/logo.jpg" alt="Mohalkar" style="height: 38px; border-radius: 6px;" onerror="this.src='/images/logo2.png';" />
+            <div>
+              <div class="text-gold fw-bold font-serif lh-1 brand-title-text" style="font-size: 1.15rem; letter-spacing: 0.08em;">MOHALKAR</div>
+              <div class="text-muted brand-sub-text" style="font-size: 0.65rem; letter-spacing: 0.15em;">STUDIO CONSOLE</div>
+            </div>
+          </a>
+          <div class="d-none d-md-flex align-items-center gap-2 border-start border-secondary ps-3 ms-2">
+            <span class="beacon-dot"></span>
+            <span class="text-muted small">Online &amp; Active</span>
+            <span id="liveClock" class="text-faint small font-monospace ms-2"></span>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 gap-md-3">
+          <div class="user-chip d-none d-sm-flex align-items-center gap-2">
+            <i class="bi bi-person-circle text-gold"></i>
+            <div>
+              <span id="currentUserName" class="fw-semibold">Ar. Abhishek Mohalkar</span>
+              <span id="currentUserBadge" class="badge bg-dark border border-secondary text-gold ms-1" style="font-size: 0.7rem;">Super Admin</span>
+            </div>
+          </div>
+
+          <a href="/index.html" class="btn btn-sm btn-dark-subtle" target="_blank" title="Preview Public Site">
+            <i class="bi bi-box-arrow-up-right me-1"></i><span class="d-none d-md-inline">Live Site</span>
+          </a>
+
+          <button type="button" id="btnLogout" class="btn btn-sm btn-outline-danger" title="Sign Out">
+            <i class="bi bi-power me-1"></i><span class="d-none d-md-inline">Logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sub-Tabs Navigation Bar -->
+    <nav class="admin-tabs-bar px-3 px-lg-4">
+      <div class="d-flex gap-1">
+        <a href="#projects" class="admin-tab-btn active" data-tab="projects">
+          <i class="bi bi-collection"></i> Project Pipeline
+          <span id="badgeProjCount" class="admin-badge-count ms-1">43</span>
+        </a>
+        <a href="#enquiries" class="admin-tab-btn" data-tab="enquiries">
+          <i class="bi bi-envelope-paper"></i> Client Leads CRM
+          <span id="badgeEnqCount" class="admin-badge-count ms-1">5</span>
+        </a>
+        <a href="#insights" class="admin-tab-btn" data-tab="insights">
+          <i class="bi bi-graph-up-arrow"></i> Studio Telemetry
+        </a>
+        <a href="#activity" class="admin-tab-btn" data-tab="activity">
+          <i class="bi bi-clock-history"></i> Audit Trail
+        </a>
+        <a href="#properties" class="admin-tab-btn" data-tab="properties">
+          <i class="bi bi-sliders"></i> Studio Properties
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container-fluid px-3 px-lg-4 py-4">
+
+      <!-- ── TAB PANE: PROJECTS PIPELINE ────────────── -->
+      <div id="tabPane-projects" class="admin-tab-pane">
+        <!-- Metric Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num" id="metricTotalProjects">43</div>
+                  <div class="metric-label">Total Projects</div>
+                </div>
+                <div class="icon-wrap"><i class="bi bi-building"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num text-success" id="metricPublishedProjects">43</div>
+                  <div class="metric-label">Published Live</div>
+                </div>
+                <div class="icon-wrap text-success"><i class="bi bi-check-circle"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num text-warning" id="metricDraftProjects">0</div>
+                  <div class="metric-label">Drafts / In Review</div>
+                </div>
+                <div class="icon-wrap text-warning"><i class="bi bi-pencil-square"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num text-gold">10</div>
+                  <div class="metric-label">Specialist Sectors</div>
+                </div>
+                <div class="icon-wrap"><i class="bi bi-grid-3x3-gap"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="admin-card mb-4">
+          <div class="row g-3 align-items-center justify-content-between">
+            <div class="col-md-5 col-lg-4">
+              <div class="input-group">
+                <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" id="projSearchInput" class="form-control admin-input" placeholder="Search by title, location, category..." />
+              </div>
+            </div>
+
+            <div class="col-md-7 col-lg-8 d-flex justify-content-md-end gap-2 flex-wrap">
+              <button type="button" id="btnNewProject" class="btn btn-gold-solid">
+                <i class="bi bi-plus-lg"></i> Add New Project
+              </button>
+            </div>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="category-pills-bar pt-3 mt-3 border-top border-secondary-subtle">
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter active" data-cat="all">All (43)</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="architecture">Architecture</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="residential">Residential</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="commercial">Commercial</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="interior">Interior</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="urban">Urban Design</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="infrastructure">Infrastructure</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="industrial">Industrial</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="landscape">Landscape</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="viz">3D Viz</button>
+            <button class="btn btn-sm btn-dark-subtle proj-cat-filter" data-cat="working">Working Drawings</button>
+          </div>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="admin-card p-0 overflow-hidden">
+          <div class="table-responsive">
+            <table class="table admin-table align-middle">
+              <thead>
+                <tr>
+                  <th>Preview</th>
+                  <th>Project Name &amp; Scope</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsTableBody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB PANE: CLIENT LEADS CRM ─────────────── -->
+      <div id="tabPane-enquiries" class="admin-tab-pane d-none">
+        <!-- Metric Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num" id="metricTotalLeads">5</div>
+                  <div class="metric-label">Total CRM Leads</div>
+                </div>
+                <div class="icon-wrap"><i class="bi bi-people"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num text-gold" id="metricNewLeads">1</div>
+                  <div class="metric-label">New / Uncontacted</div>
+                </div>
+                <div class="icon-wrap text-gold"><i class="bi bi-bell-fill"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num text-info" id="metricInProgLeads">2</div>
+                  <div class="metric-label">In Discussion</div>
+                </div>
+                <div class="icon-wrap text-info"><i class="bi bi-chat-dots-fill"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="metric-num text-success" id="metricClosedLeads">2</div>
+                  <div class="metric-label">Quoted / Finalized</div>
+                </div>
+                <div class="icon-wrap text-success"><i class="bi bi-trophy-fill"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="admin-card mb-4">
+          <div class="row g-3 align-items-center justify-content-between">
+            <div class="col-md-5 col-lg-4">
+              <div class="input-group">
+                <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" id="enqSearchInput" class="form-control admin-input" placeholder="Search client name, phone, email, location..." />
+              </div>
+            </div>
+
+            <div class="col-md-7 col-lg-8 d-flex justify-content-md-end gap-2 flex-wrap">
+              <select id="enqStatusFilterSelect" class="admin-select">
+                <option value="all">All Lead Stages</option>
+                <option value="new">Stage: New</option>
+                <option value="contacted">Stage: Contacted</option>
+                <option value="in-progress">Stage: In Progress</option>
+                <option value="quoted">Stage: Quoted</option>
+                <option value="closed">Stage: Closed</option>
+              </select>
+
+              <button type="button" id="btnExportExcel" class="btn btn-outline-gold">
+                <i class="bi bi-file-earmark-excel-fill me-1"></i> Export Excel (.xlsx)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enquiries Table -->
+        <div class="admin-card p-0 overflow-hidden">
+          <div class="table-responsive">
+            <table class="table admin-table align-middle">
+              <thead>
+                <tr>
+                  <th>Client &amp; Date</th>
+                  <th>Contact Details</th>
+                  <th>Project Type &amp; Budget</th>
+                  <th>Location</th>
+                  <th>Pipeline Stage</th>
+                  <th>Client Message</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enquiriesTableBody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB PANE: STUDIO TELEMETRY & INSIGHTS ─── -->
+      <div id="tabPane-insights" class="admin-tab-pane d-none">
+        <div class="row g-4 mb-4">
+          <div class="col-lg-6">
+            <div class="admin-card h-100">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-bar-chart-line text-gold me-2"></i>Portfolio Sector Distribution</h5>
+              <p class="text-muted small mb-4">Live tally of architectural works across active sectors.</p>
+              <div id="insightsCategoryBars">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="admin-card h-100">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-pie-chart text-gold me-2"></i>Client Enquiry Intent Breakdown</h5>
+              <p class="text-muted small mb-4">Most requested project services from web and referral leads.</p>
+              <div id="insightsLeadTypeBars">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="admin-card">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-geo-alt text-gold me-2"></i>Regional Geography Distribution</h5>
+              <p class="text-muted small mb-3">Districts and metropolitan hubs where active client inquiries originate.</p>
+              <div id="insightsCitiesList" class="d-flex flex-wrap pt-2">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="admin-card">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-shield-check text-gold me-2"></i>Executive Studio Telemetry</h5>
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="p-3 rounded border border-secondary-subtle bg-dark">
+                    <div class="text-muted small">Est. Pipeline Value</div>
+                    <div class="text-gold fw-bold" style="font-size: 1.3rem;">₹12.5+ Cr</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 rounded border border-secondary-subtle bg-dark">
+                    <div class="text-muted small">Average Response</div>
+                    <div class="text-success fw-bold" style="font-size: 1.3rem;">&lt; 24 Hours</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 rounded border border-secondary-subtle bg-dark">
+                    <div class="text-muted small">Client Conversion</div>
+                    <div class="text-white fw-bold" style="font-size: 1.3rem;">68.4%</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 rounded border border-secondary-subtle bg-dark">
+                    <div class="text-muted small">Active Hubs</div>
+                    <div class="text-white fw-bold" style="font-size: 1.3rem;">4 Cities</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB PANE: AUDIT ACTIVITY LOG ───────────── -->
+      <div id="tabPane-activity" class="admin-tab-pane d-none">
+        <div class="admin-card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h5 class="text-white font-serif mb-1">Studio Operations Audit Trail</h5>
+              <p class="text-muted small mb-0">Chronological activity record of logins, lead updates, and portfolio revisions.</p>
+            </div>
+            <span class="badge bg-dark border border-secondary text-gold">Immutable Audit Stream</span>
+          </div>
+
+          <div class="timeline" id="activityTimeline">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB PANE: STUDIO PROPERTIES & SETTINGS ─── -->
+      <div id="tabPane-properties" class="admin-tab-pane d-none">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="admin-card mb-4">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-people text-gold me-2"></i>Studio Admin Accounts</h5>
+              <p class="text-muted small mb-3">Principals and associates granted executive console access.</p>
+              
+              <div id="settingsUsersList">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <div class="admin-card">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-key text-gold me-2"></i>Security Passcode Control</h5>
+              <p class="text-muted small mb-3">Update the master passcode required for executive entry.</p>
+              
+              <form id="passcodeForm">
+                <div class="mb-3">
+                  <label class="form-label text-muted small">New Master Passcode</label>
+                  <input type="text" id="newPasscode" class="form-control admin-input" placeholder="e.g. mohalkar2026" required />
+                </div>
+                <button type="submit" class="btn btn-outline-gold btn-sm">Update Passcode</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="admin-card mb-4">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-geo-alt text-gold me-2"></i>Studio Operating Locations</h5>
+              <ul class="list-unstyled mb-0">
+                <li class="py-2 border-bottom border-secondary-subtle d-flex justify-content-between">
+                  <span class="text-white"><i class="bi bi-building me-2 text-gold"></i>Pune Studio</span>
+                  <span class="text-muted small">Baner, Pune, MH</span>
+                </li>
+                <li class="py-2 border-bottom border-secondary-subtle d-flex justify-content-between">
+                  <span class="text-white"><i class="bi bi-building me-2 text-gold"></i>Thane Studio</span>
+                  <span class="text-muted small">Hiranandani Estate, Thane, MH</span>
+                </li>
+                <li class="py-2 border-bottom border-secondary-subtle d-flex justify-content-between">
+                  <span class="text-white"><i class="bi bi-building me-2 text-gold"></i>Dharashiv Studio</span>
+                  <span class="text-muted small">Dharashiv Central, MH</span>
+                </li>
+                <li class="py-2 d-flex justify-content-between">
+                  <span class="text-white"><i class="bi bi-building me-2 text-gold"></i>Bhoom Office</span>
+                  <span class="text-muted small">Bhoom Taluka Hub, MH</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="admin-card">
+              <h5 class="text-white font-serif mb-3"><i class="bi bi-database-down text-gold me-2"></i>Data Backup &amp; Archival</h5>
+              <p class="text-muted small mb-3">Download a portable JSON snapshot of all portfolio projects, CRM leads, and activity records.</p>
+              <button type="button" id="btnDownloadBackup" class="btn btn-dark-subtle w-100 py-2">
+                <i class="bi bi-download me-2 text-gold"></i>Download Studio Backup (.json)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       3. MODALS
+  ═══════════════════════════════════════════════════ -->
+
+  <!-- Project Add/Edit Modal -->
+  <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content admin-modal-content">
+        <form id="projectForm">
+          <div class="modal-header admin-modal-header">
+            <h5 class="modal-title text-white font-serif" id="projectModalTitle">Add New Project</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <input type="hidden" id="projId" />
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label text-muted small">Project Title *</label>
+                <input type="text" id="projTitle" class="form-control admin-input" placeholder="e.g. Modern Minimalist Villa" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted small">Category *</label>
+                <select id="projCategory" class="form-select admin-select" required>
+                  <option value="architecture">Architecture</option>
+                  <option value="residential">Residential</option>
+                  <option value="commercial">Commercial</option>
+                  <option value="interior">Interior</option>
+                  <option value="urban">Urban Design</option>
+                  <option value="infrastructure">Infrastructure</option>
+                  <option value="industrial">Industrial</option>
+                  <option value="landscape">Landscape</option>
+                  <option value="viz">3D Visualization</option>
+                  <option value="working">Working Drawings</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small">Location *</label>
+                <input type="text" id="projLocation" class="form-control admin-input" placeholder="e.g. Pune, Maharashtra" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted small">Publish Status</label>
+                <select id="projStatus" class="form-select admin-select">
+                  <option value="published">Published (Live)</option>
+                  <option value="draft">Draft (Hidden)</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-muted small">Featured Image Path or URL *</label>
+                <input type="text" id="projImage" class="form-control admin-input" placeholder="e.g. /images/arc2.jpg" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label text-muted small">Project Scope / Details</label>
+                <textarea id="projScope" class="form-control admin-input" rows="3" placeholder="Describe architectural scope, scale, or materials..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer admin-modal-footer">
+            <button type="button" class="btn btn-dark-subtle" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-gold-solid">Save Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enquiry Details Modal -->
+  <div class="modal fade" id="enquiryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content admin-modal-content">
+        <div class="modal-header admin-modal-header">
+          <h5 class="modal-title text-white font-serif">Client Lead Dossier</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="modalEnqId" />
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <div class="p-3 rounded border border-secondary-subtle bg-dark">
+                <div class="text-muted small">Client Name</div>
+                <h5 class="text-white fw-bold mb-2" id="modalEnqName"></h5>
+                <div class="text-light small mb-1"><i class="bi bi-envelope text-gold me-2"></i><span id="modalEnqEmail"></span></div>
+                <div class="text-light small mb-1"><i class="bi bi-telephone text-gold me-2"></i><span id="modalEnqPhone"></span></div>
+                <div class="text-light small"><i class="bi bi-geo-alt text-gold me-2"></i><span id="modalEnqLocation"></span></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 rounded border border-secondary-subtle bg-dark">
+                <div class="text-muted small">Project Scope &amp; Budget</div>
+                <div class="text-white fw-bold text-capitalize mb-2" id="modalEnqType"></div>
+                <div class="text-gold fw-bold mb-2">Estimated Budget: <span id="modalEnqBudget"></span></div>
+                <div class="text-muted small">Received on: <span id="modalEnqDate"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label text-muted small fw-semibold">Client Inquiry Message</label>
+            <div class="p-3 rounded border border-secondary-subtle bg-dark text-light" id="modalEnqMessage" style="white-space: pre-line;"></div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label text-muted small fw-semibold">Lead Pipeline Stage</label>
+              <select id="modalEnqStatus" class="form-select admin-select">
+                <option value="new">● New (Uncontacted)</option>
+                <option value="contacted">● Contacted</option>
+                <option value="in-progress">● In Progress</option>
+                <option value="quoted">● Quoted</option>
+                <option value="closed">● Closed</option>
+              </select>
+            </div>
+            <div class="col-md-6 d-flex align-items-end gap-2">
+              <a id="modalEnqWhatsAppBtn" href="#" target="_blank" class="btn btn-success flex-grow-1">
+                <i class="bi bi-whatsapp me-1"></i> WhatsApp
+              </a>
+              <a id="modalEnqMailBtn" href="#" class="btn btn-outline-light flex-grow-1">
+                <i class="bi bi-envelope me-1"></i> Send Email
+              </a>
+            </div>
+            <div class="col-12">
+              <label class="form-label text-muted small fw-semibold">Internal Studio Notes</label>
+              <textarea id="modalEnqNotes" class="form-control admin-input" rows="3" placeholder="Add follow-up notes, site visit dates, or quotation details..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer admin-modal-footer">
+          <button type="button" class="btn btn-dark-subtle" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="btnSaveEnquiryNotes" class="btn btn-gold-solid">Save Updates</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content admin-modal-content" style="border: 1px solid rgba(239, 68, 68, 0.45); box-shadow: 0 10px 40px rgba(239, 68, 68, 0.15);">
+        <div class="modal-header admin-modal-header" style="border-bottom-color: rgba(239, 68, 68, 0.25);">
+          <h5 class="modal-title text-danger font-serif" style="font-size: 1.25rem;">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirm Deletion
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-white mb-2 fs-6" id="deleteConfirmTitle">Are you sure you want to delete this record?</p>
+          <p class="text-muted small mb-0">This record will be permanently deleted from the studio database.</p>
+        </div>
+        <div class="modal-footer admin-modal-footer">
+          <button type="button" class="btn btn-dark-subtle" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id="btnExecuteDelete" class="btn btn-danger px-4">
+            <i class="bi bi-trash-fill me-1"></i>Delete Permanently
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1090">
+    <div id="adminToast" class="toast align-items-center text-white bg-dark border border-secondary shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i id="adminToastIcon" class="bi bi-check-circle-fill text-gold fs-5"></i>
+          <span id="adminToastMsg">Action completed successfully.</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Controller Script -->
+  <script src="/javascript/admin.js"></script>
+</body>
+</html>

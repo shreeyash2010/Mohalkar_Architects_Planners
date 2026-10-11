@@ -1,0 +1,50 @@
+[
+  {
+    "id": "act-1791701789147",
+    "action": "Admin Authentication",
+    "details": "Successful login for Ar. Abhishek Mohalkar (Super Admin)",
+    "user": "Ar. Abhishek Mohalkar",
+    "timestamp": "2026-10-11T06:56:29.147Z",
+    "badge": "success"
+  },
+  {
+    "id": "act-1",
+    "action": "System Initialization",
+    "details": "Studio Admin Console initialized with 43 portfolio projects",
+    "user": "System",
+    "timestamp": "2026-10-06T06:52:11.431Z",
+    "badge": "info"
+  },
+  {
+    "id": "act-2",
+    "action": "Quotation Dispatched",
+    "details": "Dispatched layout proposal to Anand Shinde (Bhoom Subdivision)",
+    "user": "Ar. Abhishek Mohalkar",
+    "timestamp": "2026-10-07T12:52:11.431Z",
+    "badge": "primary"
+  },
+  {
+    "id": "act-3",
+    "action": "Lead Status Updated",
+    "details": "Updated Rajesh Kulkarni (Thane Interior) status to Contacted",
+    "user": "Shreeyash Mali",
+    "timestamp": "2026-10-09T04:52:11.431Z",
+    "badge": "warning"
+  },
+  {
+    "id": "act-4",
+    "action": "Site Visit Scheduled",
+    "details": "Scheduled Dharashiv highway site review with Sneha Deshmukh",
+    "user": "Ar. Abhishek Mohalkar",
+    "timestamp": "2026-10-10T04:52:11.431Z",
+    "badge": "success"
+  },
+  {
+    "id": "act-5",
+    "action": "New Lead Inflow",
+    "details": "Received online enquiry from Dr. Vikram Patil (Baner Villa, Pune)",
+    "user": "Web Client",
+    "timestamp": "2026-10-11T02:52:11.431Z",
+    "badge": "gold"
+  }
+]

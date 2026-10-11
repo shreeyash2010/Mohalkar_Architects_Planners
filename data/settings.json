@@ -1,0 +1,43 @@
+{
+  "firm": "Mohalkar Architects & Planners",
+  "principal": "Ar. Abhishek Mohalkar",
+  "associate": "Shreeyash Mali",
+  "locations": [
+    "Pune",
+    "Thane",
+    "Dharashiv",
+    "Bhoom"
+  ],
+  "phone": "+91 9146079235",
+  "email": "mohalkararchitectsandplanners@gmail.com",
+  "workingHours": "Mon – Sat · 10 AM – 7 PM",
+  "masterPasscode": "mohalkar2026",
+  "users": [
+    {
+      "id": "usr-abhishek",
+      "name": "Ar. Abhishek Mohalkar",
+      "username": "abhishek",
+      "password": "mohalkar2026",
+      "role": "Principal Architect",
+      "accessLevel": "Super Admin",
+      "email": "abhishekmohalkar.1996@gmail.com",
+      "phone": "+91 9146079235",
+      "avatarColor": "gold",
+      "status": "active",
+      "isDefault": true
+    },
+    {
+      "id": "usr-shreeyash",
+      "name": "Shreeyash Mali",
+      "username": "shreeyash",
+      "password": "mali2026",
+      "role": "Associate Architect",
+      "accessLevel": "Super Admin",
+      "email": "shreeyash.mali.in@gmail.com",
+      "phone": "+91 86002 62688",
+      "avatarColor": "blue",
+      "status": "active",
+      "isDefault": true
+    }
+  ]
+}

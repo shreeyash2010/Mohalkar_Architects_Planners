@@ -24,8 +24,9 @@
           <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="/expertise.html">Expertise</a></li>
           <li class="nav-item"><a class="nav-link" href="/services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="/index.html#projectsSection">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="/projects.html">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="/enquiry.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin.html" title="Studio Admin Portal"><i class="bi bi-shield-lock me-1"></i>Admin</a></li>
           <li class="nav-item ms-lg-3">
             <a class="btn btn-nav-cta" href="/enquiry.html">Enquire Now</a>
           </li>
@@ -100,18 +101,20 @@
             <li><a href="/about.html">About Us</a></li>
             <li><a href="/expertise.html">Expertise</a></li>
             <li><a href="/services.html">Services</a></li>
-            <li><a href="/index.html#projectsSection">Projects</a></li>
+            <li><a href="/projects.html">Projects</a></li>
             <li><a href="/enquiry.html">Contact</a></li>
+            <li><a href="/admin.html">Admin Portal</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-6">
           <h6 class="footer-col-heading">Services</h6>
           <ul class="footer-links">
-            <li><a href="/expertise.html">Residential Architecture</a></li>
-            <li><a href="/expertise.html">Commercial Design</a></li>
-            <li><a href="/expertise.html">Interior Design</a></li>
-            <li><a href="/expertise.html">Urban Planning</a></li>
-            <li><a href="/expertise.html">Landscape Design</a></li>
+            <li><a href="/services.html"><i class="bi bi-house-gear text-gold me-2"></i>Residential Architecture</a></li>
+            <li><a href="/services.html"><i class="bi bi-buildings text-gold me-2"></i>Commercial &amp; Hospitality</a></li>
+            <li><a href="/services.html"><i class="bi bi-lamp text-gold me-2"></i>Interior Architecture</a></li>
+            <li><a href="/services.html"><i class="bi bi-compass text-gold me-2"></i>Urban &amp; Master Planning</a></li>
+            <li><a href="/services.html"><i class="bi bi-tree text-gold me-2"></i>Landscape Architecture</a></li>
+            <li><a href="/services.html"><i class="bi bi-boxes text-gold me-2"></i>3D Visualization &amp; BIM</a></li>
           </ul>
         </div>
         <div class="col-lg-3">

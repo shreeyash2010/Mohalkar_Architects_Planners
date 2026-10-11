@@ -1,0 +1,58 @@
+[
+  {
+    "id": "enq-102",
+    "name": "Sneha Deshmukh",
+    "email": "sneha.deshmukh@horizonresorts.in",
+    "phone": "+91 97654 32189",
+    "location": "Dharashiv",
+    "type": "commercial",
+    "budget": "1-5Cr",
+    "message": "Boutique luxury resort & banquet facility design required near Dharashiv highway. Need concept master plan and 3D elevations.",
+    "status": "in-progress",
+    "source": "referral",
+    "notes": "Site visit scheduled for upcoming Saturday. Discussed zoning bylaws.",
+    "timestamp": "2026-10-10T02:52:11.431Z"
+  },
+  {
+    "id": "enq-103",
+    "name": "Rajesh Kulkarni",
+    "email": "rajesh.kulkarni@gmail.com",
+    "phone": "+91 99201 88344",
+    "location": "Thane",
+    "type": "interior",
+    "budget": "10-50L",
+    "message": "Penthouse turnkey interior design in Hiranandani Estate, Thane. Minimalist Japanese-Scandinavian style.",
+    "status": "contacted",
+    "source": "google",
+    "notes": "Shared mood boards. Client reviewing scope estimate.",
+    "timestamp": "2026-10-09T02:52:11.431Z"
+  },
+  {
+    "id": "enq-104",
+    "name": "Anand Shinde",
+    "email": "anand.shinde@agroinfra.com",
+    "phone": "+91 94231 65780",
+    "location": "Bhoom",
+    "type": "urban-planning",
+    "budget": "50L-1Cr",
+    "message": "9-acre farmland subdivision layout into 32 residential plots with internal roads, clubhouse area, and rainwater harvesting.",
+    "status": "quoted",
+    "source": "referral",
+    "notes": "Quotation of ₹6.5L for master layout & sanction approval submitted.",
+    "timestamp": "2026-10-07T06:52:11.431Z"
+  },
+  {
+    "id": "enq-105",
+    "name": "Amitabh Kapse",
+    "email": "amitabh.kapse@gmail.com",
+    "phone": "+91 98900 11223",
+    "location": "Solapur",
+    "type": "industrial",
+    "budget": "1-5Cr",
+    "message": "Pre-engineered building (PEB) warehouse and office complex on a 2-acre industrial zone. Need structural and architectural sanction drawings.",
+    "status": "closed",
+    "source": "linkedin",
+    "notes": "Project agreement finalized. Sanction drawings in progress.",
+    "timestamp": "2026-10-03T18:52:11.431Z"
+  }
+]

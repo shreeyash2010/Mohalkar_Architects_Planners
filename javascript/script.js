@@ -222,59 +222,80 @@ document.addEventListener('DOMContentLoaded', function () {
         phone: (formData.get('phone') || '').toString().trim(),
         location: (formData.get('location') || '').toString().trim(),
         type: (formData.get('type') || '').toString().trim(),
+        budget: (formData.get('budget') || '').toString().trim(),
+        source: (formData.get('source') || '').toString().trim(),
         message: (formData.get('message') || '').toString().trim()
       };
 
-      // Save locally
+      // Save locally for client records & CRM
       saveEnquiry({ Timestamp: new Date().toLocaleString(), ...enquiryData });
 
-      // Update button state while sending
+      // Build structured WhatsApp message format
+      const studioWhatsAppNumber = '919146079235';
+      const typeLabel = enquiryData.type
+        ? (enquiryData.type.charAt(0).toUpperCase() + enquiryData.type.slice(1).replace('-', ' '))
+        : 'Not specified';
+      const budgetLabel = enquiryData.budget || 'Not specified';
+
+      const whatsappText =
+`*New Project Enquiry — Mohalkar Architects & Planners*
+
+*Client Name:* ${enquiryData.name}
+*Contact Phone:* ${enquiryData.phone}
+*Email Address:* ${enquiryData.email}
+*Project Location:* ${enquiryData.location}
+*Project Type:* ${typeLabel}
+*Estimated Budget:* ${budgetLabel}
+
+*Project Details & Brief:*
+${enquiryData.message}
+`;
+
+      const whatsappUrl = `https://wa.me/${studioWhatsAppNumber}?text=${encodeURIComponent(whatsappText)}`;
+
+      // Update button state while submitting
       const submitBtn = enquiryForm.querySelector('button[type="submit"]');
       const originalBtnText = submitBtn.innerHTML;
-      submitBtn.innerHTML = 'Sending... <i class="bi bi-hourglass-split ms-2"></i>';
+      submitBtn.innerHTML = 'Connecting to WhatsApp... <i class="bi bi-whatsapp ms-2 text-success"></i>';
       submitBtn.disabled = true;
-      enquiryStatus.textContent = '';
 
+      // Send to server in background to log in CRM database
       try {
-        // Attempt to send using your send-enquiry.js backend
-        const response = await fetch('/api/send-enquiry', {
+        fetch('/api/send-enquiry', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(enquiryData)
-        });
+        }).catch(err => console.warn('CRM sync notification:', err));
+      } catch (err) {}
 
-        if (!response.ok) throw new Error('Backend failed');
+      // Confirmation message with direct link fallback
+      enquiryStatus.innerHTML =
+        '<span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Enquiry sent!</span> ' +
+        '<a href="' + whatsappUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-success ms-2 py-1 px-3">' +
+        '<i class="bi bi-whatsapp me-1"></i>Open in WhatsApp</a>';
+      enquiryStatus.className = 'enquiry-status success';
 
-        enquiryStatus.textContent = 'Thank you! Your enquiry has been sent.';
-        enquiryStatus.className = 'enquiry-status success';
-        enquiryForm.reset();
-        enquiryForm.classList.remove('was-validated');
+      // Automatically trigger WhatsApp pre-filled chat
+      const isMobileDevice = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobileDevice) {
+        window.location.href = whatsappUrl;
+      } else {
+        const waAnchor = document.createElement('a');
+        waAnchor.href = whatsappUrl;
+        waAnchor.target = '_blank';
+        waAnchor.rel = 'noopener noreferrer';
+        document.body.appendChild(waAnchor);
+        waAnchor.click();
+        document.body.removeChild(waAnchor);
+      }
 
-      } catch (error) {
-        // Fallback: If backend is down, open the user's default Mail Client
-        console.warn('Backend send failed. Opening Mailto fallback...');
+      enquiryForm.reset();
+      enquiryForm.classList.remove('was-validated');
 
-        const mailSubject = encodeURIComponent(`New Enquiry from ${enquiryData.name}`);
-        const mailBody = encodeURIComponent(
-          `Name: ${enquiryData.name}\n` +
-          `Email: ${enquiryData.email}\n` +
-          `Phone: ${enquiryData.phone}\n` +
-          `Location: ${enquiryData.location}\n` +
-          `Project Type: ${enquiryData.type || 'Not specified'}\n\n` +
-          `Project Details:\n${enquiryData.message}`
-        );
-
-        window.location.href = `mailto:${recipientEmail}?subject=${mailSubject}&body=${mailBody}`;
-
-        enquiryStatus.textContent = 'Opening your mail app to complete the enquiry...';
-        enquiryStatus.className = 'enquiry-status success';
-        enquiryForm.reset();
-        enquiryForm.classList.remove('was-validated');
-
-      } finally {
+      setTimeout(() => {
         submitBtn.innerHTML = originalBtnText;
         submitBtn.disabled = false;
-      }
+      }, 1000);
     });
   }
 
