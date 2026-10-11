@@ -10,8 +10,10 @@
     "message": "Boutique luxury resort & banquet facility design required near Dharashiv highway. Need concept master plan and 3D elevations.",
     "status": "in-progress",
     "source": "referral",
-    "notes": "Site visit scheduled for upcoming Saturday. Discussed zoning bylaws.",
-    "timestamp": "2026-10-10T02:52:11.431Z"
+    "notes": "Site inspection scheduled",
+    "timestamp": "2026-10-10T02:52:11.431Z",
+    "actor": "Admin",
+    "updatedAt": "2026-10-11T10:58:34.613Z"
   },
   {
     "id": "enq-103",

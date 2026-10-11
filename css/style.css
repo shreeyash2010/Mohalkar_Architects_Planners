@@ -154,10 +154,10 @@ iframe {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    160deg,
-    rgba(10,10,10,0.72) 0%,
-    rgba(10,10,10,0.55) 50%,
-    rgba(10,10,10,0.72) 100%
+    180deg,
+    rgba(10,10,10,0.85) 0%,
+    rgba(10,10,10,0.68) 45%,
+    rgba(10,10,10,0.88) 100%
   );
 }
 .hero-content {
@@ -173,28 +173,31 @@ iframe {
 }
 .hero-eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 18px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 .hero-heading {
   font-family: var(--font-serif);
   font-size: clamp(2.4rem, 6vw, 5rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.15;
-  color: var(--white);
+  color: #ffffff;
   margin-bottom: 20px;
+  text-shadow: 0 3px 18px rgba(0,0,0,0.8);
 }
 .hero-sub {
   font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.75);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.92);
   letter-spacing: 2px;
   margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 .btn-hero-primary {
   background: var(--gold);
@@ -1014,4 +1017,43 @@ a.contact-val:hover { color: var(--gold); }
   background-color: #128C7E;
   color: #fff;
   transform: scale(1.1);
+}
+
+/* ══════════════════════════════════════
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+══════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 3px !important;
+  border-radius: 3px;
+}
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.nav-link:focus-visible,
+.btn-nav-cta:focus-visible,
+.btn-gold:focus-visible,
+.btn-hero-primary:focus-visible,
+.btn-hero-outline:focus-visible,
+.proj-filter-btn:focus-visible,
+.popup-link:focus-visible,
+.expertise-card:focus-visible,
+.team-card:focus-visible,
+.contact-card:focus-visible,
+.whatsapp-float:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 12px rgba(200, 169, 110, 0.5) !important;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 1px !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 10px rgba(200, 169, 110, 0.4) !important;
 }

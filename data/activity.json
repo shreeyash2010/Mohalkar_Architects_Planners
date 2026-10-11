@@ -1,5 +1,29 @@
 [
   {
+    "id": "act-1791716332283",
+    "action": "Lead Removed",
+    "details": "Deleted lead for Pooja Kulkarni",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:58:52.283Z",
+    "badge": "danger"
+  },
+  {
+    "id": "act-1791716325069",
+    "action": "Lead Saved",
+    "details": "Saved details for Pooja Kulkarni",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:58:45.069Z",
+    "badge": "primary"
+  },
+  {
+    "id": "act-1791716314614",
+    "action": "Lead Dossier Updated",
+    "details": "Updated details for Sneha Deshmukh",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:58:34.614Z",
+    "badge": "info"
+  },
+  {
     "id": "act-1791715294440",
     "action": "Project Updated",
     "details": "Modified portfolio item \"undefined\"",

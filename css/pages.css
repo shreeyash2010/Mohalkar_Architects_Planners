@@ -35,7 +35,7 @@
 .page-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.5) 100%);
+  background: linear-gradient(180deg, rgba(10,10,10,0.86) 0%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.88) 100%);
 }
 .page-hero-content {
   position: relative;
