@@ -1330,52 +1330,175 @@
   <script src="/javascript/script.js" defer></script>
 
   <script>
-    /* ── PROJECT FILTER ──────────────────────────── */
+    /* ── LIVE PROJECT PIPELINE & FILTER CONTROLLER ── */
     document.addEventListener('DOMContentLoaded', function () {
       const filterBtns = document.querySelectorAll('.proj-filter-btn');
-      const projItems = document.querySelectorAll('.proj-item');
+      const projectGrid = document.getElementById('projectGrid');
       const noResults = document.getElementById('noResults');
+      let currentFilter = 'all';
 
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
 
-          const filter = this.dataset.filter;
-          let visible = 0;
+      function formatCategory(cat) {
+        if (!cat) return 'Architecture';
+        const map = {
+          'architecture': 'Architecture',
+          'residential': 'Residential',
+          'commercial': 'Commercial',
+          'interior': 'Interior',
+          'urban': 'Urban Design',
+          'infrastructure': 'Infrastructure',
+          'industrial': 'Industrial',
+          'landscape': 'Landscape',
+          'viz': '3D Visualization',
+          'working': 'Working Drawings'
+        };
+        return map[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1));
+      }
 
-          projItems.forEach(item => {
-            const match = filter === 'all' || item.dataset.cat === filter;
-            item.style.display = match ? '' : 'none';
-            if (match) visible++;
-          });
+      function applyFilter(filter) {
+        currentFilter = filter;
+        const items = document.querySelectorAll('.proj-item');
+        let visible = 0;
 
-          noResults.style.display = visible === 0 ? 'block' : 'none';
+        items.forEach(item => {
+          const cat = item.dataset.cat;
+          const match = filter === 'all' || cat === filter;
+          item.style.display = match ? '' : 'none';
+          if (match) visible++;
         });
-      });
 
-      /* Lightbox */
+        if (noResults) {
+          noResults.style.display = visible === 0 ? 'block' : 'none';
+        }
+      }
+
+      function setupFilterListeners() {
+        filterBtns.forEach(btn => {
+          btn.addEventListener('click', function () {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            applyFilter(this.dataset.filter || 'all');
+          });
+        });
+      }
+
+      /* Lightbox bindings */
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
       const closeBtn = document.getElementById('lightbox-close');
 
-      document.querySelectorAll('.popup-link').forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          lightboxImg.src = link.getAttribute('href');
-          lightbox.style.display = 'flex';
-          document.body.style.overflow = 'hidden';
+      function setupLightbox() {
+        document.querySelectorAll('.popup-link').forEach(link => {
+          link.onclick = function (e) {
+            e.preventDefault();
+            if (lightbox && lightboxImg) {
+              lightboxImg.src = link.getAttribute('href');
+              lightbox.style.display = 'flex';
+              document.body.style.overflow = 'hidden';
+            }
+          };
         });
-      });
+      }
 
       function closeLightbox() {
-        lightbox.style.display = 'none';
-        lightboxImg.src = '';
-        document.body.style.overflow = '';
+        if (lightbox && lightboxImg) {
+          lightbox.style.display = 'none';
+          lightboxImg.src = '';
+          document.body.style.overflow = '';
+        }
       }
-      if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-      if (lightbox) lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+      if (closeBtn) closeBtn.onclick = closeLightbox;
+      if (lightbox) lightbox.onclick = function (e) { if (e.target === lightbox) closeLightbox(); };
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+
+      function renderLiveProjects(projects) {
+        if (!projectGrid || !projects || !projects.length) return;
+
+        projectGrid.innerHTML = projects.map(p => {
+          const category = p.category || 'architecture';
+          const tag = p.tag || formatCategory(category);
+          const label = p.label || 'Professional';
+          const img = p.image || '/images/arc2.jpg';
+          const title = p.title || 'Studio Project';
+          const location = p.location || 'India';
+
+          return `
+            <div class="col-lg-4 col-md-6 proj-item" data-cat="${escapeHtml(category)}" data-reveal="up">
+              <div class="proj-card">
+                <a href="${escapeHtml(img)}" class="popup-link" title="${escapeHtml(title)}">
+                  <div class="proj-thumb">
+                    <img src="${escapeHtml(img)}" class="proj-img" alt="${escapeHtml(title)}" loading="lazy" onerror="this.onerror=null;this.src='/images/arc2.jpg';" />
+                    <div class="proj-overlay"><i class="bi bi-zoom-in"></i></div>
+                    <span class="proj-tag">${escapeHtml(tag)}</span>
+                    <span class="proj-label">${escapeHtml(label)}</span>
+                  </div>
+                </a>
+                <div class="proj-info">
+                  <h5 class="proj-title">${escapeHtml(title)}</h5>
+                  <p class="proj-loc"><i class="bi bi-geo-alt-fill"></i> ${escapeHtml(location)}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        setupLightbox();
+        applyFilter(currentFilter);
+
+        // Trigger reveal animations on newly injected cards
+        if ('IntersectionObserver' in window) {
+          const obs = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.proj-item[data-reveal]').forEach(el => obs.observe(el));
+        } else {
+          document.querySelectorAll('.proj-item').forEach(el => el.classList.add('revealed'));
+        }
+      }
+
+      async function syncLivePipeline() {
+        try {
+          const res = await fetch('/api/projects');
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+              renderLiveProjects(data.data);
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn('Pipeline fetch error, using local/cached state:', err);
+        }
+
+        // Check local cache if available
+        try {
+          const cached = JSON.parse(localStorage.getItem('mohalkar_published_projects'));
+          if (Array.isArray(cached) && cached.length > 0) {
+            renderLiveProjects(cached);
+          }
+        } catch (e) {}
+      }
+
+      // Initial setup with pre-rendered items
+      setupFilterListeners();
+      setupLightbox();
+
+      // Fetch and dynamically sync live projects from pipeline
+      syncLivePipeline();
     });
   </script>
 

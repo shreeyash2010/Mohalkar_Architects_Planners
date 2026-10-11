@@ -803,30 +803,61 @@
   }
 
   function openEnquiryDetailsModal(id) {
-    const e = allEnquiries.find(item => item.id === id);
-    if (!e) return;
+    const isNew = !id;
+    const titleEl = document.getElementById('enquiryModalTitle');
+    const metaRow = document.getElementById('modalEnqMetaRow');
+    const saveBtn = document.getElementById('btnSaveEnquiryNotes');
 
-    document.getElementById('modalEnqName').textContent = e.name;
-    document.getElementById('modalEnqEmail').textContent = e.email;
-    document.getElementById('modalEnqPhone').textContent = e.phone;
-    document.getElementById('modalEnqLocation').textContent = e.location;
-    document.getElementById('modalEnqType').textContent = e.type || 'Residential';
-    document.getElementById('modalEnqBudget').textContent = e.budget || 'Not specified';
-    document.getElementById('modalEnqMessage').textContent = e.message;
-    document.getElementById('modalEnqDate').textContent = new Date(e.timestamp || Date.now()).toLocaleString();
-    document.getElementById('modalEnqStatus').value = e.status || 'new';
-    document.getElementById('modalEnqNotes').value = e.notes || '';
-    document.getElementById('modalEnqId').value = e.id;
+    if (isNew) {
+      if (titleEl) titleEl.textContent = 'Add New Client Lead';
+      if (saveBtn) saveBtn.innerHTML = '<i class="bi bi-person-plus-fill me-1"></i> Create Lead';
+      document.getElementById('modalEnqId').value = '';
+      document.getElementById('modalEnqNameInput').value = '';
+      document.getElementById('modalEnqPhoneInput').value = '';
+      document.getElementById('modalEnqEmailInput').value = '';
+      document.getElementById('modalEnqLocationInput').value = '';
+      document.getElementById('modalEnqTypeSelect').value = 'residential';
+      document.getElementById('modalEnqBudgetInput').value = '';
+      document.getElementById('modalEnqStatus').value = 'new';
+      document.getElementById('modalEnqMessageInput').value = '';
+      document.getElementById('modalEnqNotes').value = '';
+      if (metaRow) metaRow.classList.add('d-none');
+    } else {
+      const e = allEnquiries.find(item => item.id === id);
+      if (!e) return;
 
-    const cleanPhone = (e.phone || '').replace(/[^0-9]/g, '');
-    const waBtn = document.getElementById('modalEnqWhatsAppBtn');
-    if (waBtn) {
-      waBtn.href = `https://wa.me/${cleanPhone}?text=Hello%20${encodeURIComponent(e.name)},%20this%20is%20Mohalkar%20Architects%20regarding%20your%20project%20enquiry.`;
-    }
+      if (titleEl) titleEl.textContent = 'Client Lead Dossier';
+      if (saveBtn) saveBtn.innerHTML = '<i class="bi bi-check2-circle me-1"></i> Save Updates';
+      document.getElementById('modalEnqId').value = e.id;
+      document.getElementById('modalEnqNameInput').value = e.name || '';
+      document.getElementById('modalEnqPhoneInput').value = e.phone || '';
+      document.getElementById('modalEnqEmailInput').value = e.email || '';
+      document.getElementById('modalEnqLocationInput').value = e.location || '';
+      document.getElementById('modalEnqTypeSelect').value = e.type || 'residential';
+      document.getElementById('modalEnqBudgetInput').value = e.budget || '';
+      document.getElementById('modalEnqStatus').value = e.status || 'new';
+      document.getElementById('modalEnqMessageInput').value = e.message || '';
+      document.getElementById('modalEnqNotes').value = e.notes || '';
 
-    const mailBtn = document.getElementById('modalEnqMailBtn');
-    if (mailBtn) {
-      mailBtn.href = `mailto:${e.email}?subject=${encodeURIComponent('Mohalkar Architects – Response to your Project Enquiry')}`;
+      const dateEl = document.getElementById('modalEnqDate');
+      if (dateEl) {
+        dateEl.textContent = new Date(e.timestamp || Date.now()).toLocaleDateString('en-IN', {
+          month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+      }
+
+      if (metaRow) metaRow.classList.remove('d-none');
+
+      const cleanPhone = (e.phone || '').replace(/[^0-9]/g, '');
+      const waBtn = document.getElementById('modalEnqWhatsAppBtn');
+      if (waBtn) {
+        waBtn.href = `https://wa.me/${cleanPhone}?text=Hello%20${encodeURIComponent(e.name || '')},%20this%20is%20Mohalkar%20Architects%20regarding%20your%20project%20enquiry.`;
+      }
+
+      const mailBtn = document.getElementById('modalEnqMailBtn');
+      if (mailBtn) {
+        mailBtn.href = `mailto:${e.email || ''}?subject=${encodeURIComponent('Mohalkar Architects – Response to your Project Enquiry')}`;
+      }
     }
 
     const modalEl = document.getElementById('enquiryModal');
@@ -891,13 +922,13 @@
         const id = document.getElementById('projId').value;
         const projectData = {
           id: id || undefined,
-          title: document.getElementById('projTitle').value,
+          title: (document.getElementById('projTitle').value || '').trim(),
           category: document.getElementById('projCategory').value,
-          location: document.getElementById('projLocation').value,
-          image: document.getElementById('projImage').value,
-          scope: document.getElementById('projScope').value,
+          location: (document.getElementById('projLocation').value || '').trim(),
+          image: (document.getElementById('projImage').value || '').trim(),
+          scope: (document.getElementById('projScope').value || '').trim(),
           status: document.getElementById('projStatus').value,
-          actor: currentUser?.name
+          actor: currentUser?.name || 'Admin'
         };
 
         try {
@@ -907,13 +938,24 @@
             body: JSON.stringify(projectData)
           });
           if (res.ok) {
-            projectModalInstance?.hide();
+            const modalEl = document.getElementById('projectModal');
+            if (window.bootstrap) {
+              const modal = bootstrap.Modal.getInstance(modalEl) || projectModalInstance;
+              modal?.hide();
+            }
             await fetchProjects();
             renderProjects();
             fetchActivity();
+            try {
+              localStorage.setItem('mohalkar_published_projects', JSON.stringify(allProjects.filter(p => p.status !== 'draft')));
+            } catch (err) {}
+            showToast(`Project "${projectData.title}" saved successfully.`, 'success');
+          } else {
+            showToast('Server returned an error while saving project.', 'danger');
           }
         } catch (err) {
           console.error('Error saving project:', err);
+          showToast('Failed to save project. Please check network connection.', 'danger');
         }
       });
     }
@@ -940,34 +982,109 @@
       btnExportExcel.addEventListener('click', exportEnquiriesToExcel);
     }
 
-    // Enquiry Details Modal Save Notes
+    const btnAddNewLead = document.getElementById('btnAddNewLead');
+    if (btnAddNewLead) {
+      btnAddNewLead.addEventListener('click', () => openEnquiryDetailsModal(null));
+    }
+
+    // Enquiry Details Modal Save Handler
     const btnSaveEnquiryNotes = document.getElementById('btnSaveEnquiryNotes');
     if (btnSaveEnquiryNotes) {
       btnSaveEnquiryNotes.addEventListener('click', async () => {
         const id = document.getElementById('modalEnqId').value;
+        const name = (document.getElementById('modalEnqNameInput').value || '').trim();
+        const phone = (document.getElementById('modalEnqPhoneInput').value || '').trim();
+        const email = (document.getElementById('modalEnqEmailInput').value || '').trim();
+        const location = (document.getElementById('modalEnqLocationInput').value || '').trim();
+        const type = document.getElementById('modalEnqTypeSelect').value;
+        const budget = (document.getElementById('modalEnqBudgetInput').value || '').trim();
         const status = document.getElementById('modalEnqStatus').value;
-        const notes = document.getElementById('modalEnqNotes').value;
+        const message = (document.getElementById('modalEnqMessageInput').value || '').trim();
+        const notes = (document.getElementById('modalEnqNotes').value || '').trim();
+
+        if (!name) {
+          showToast('Please provide a client name.', 'warning');
+          document.getElementById('modalEnqNameInput')?.focus();
+          return;
+        }
+
+        const payload = {
+          name,
+          phone,
+          email,
+          location: location || 'Maharashtra',
+          type,
+          budget: budget || 'Not specified',
+          status,
+          message,
+          notes,
+          actor: currentUser?.name || 'Admin'
+        };
+
+        const originalBtnHtml = btnSaveEnquiryNotes.innerHTML;
+        btnSaveEnquiryNotes.disabled = true;
+        btnSaveEnquiryNotes.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving...';
 
         try {
-          const res = await fetch(`/api/admin/enquiries/${id}`, {
-            method: 'PUT',
+          const endpoint = id ? `/api/admin/enquiries/${id}` : '/api/admin/enquiries';
+          const method = id ? 'PUT' : 'POST';
+
+          const res = await fetch(endpoint, {
+            method,
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status, notes, actor: currentUser?.name })
+            body: JSON.stringify(payload)
           });
+
           if (res.ok) {
-            enquiryModalInstance?.hide();
-            const item = allEnquiries.find(e => e.id === id);
-            if (item) {
-              item.status = status;
-              item.notes = notes;
+            const json = await res.json();
+            const savedItem = json.data;
+
+            if (id) {
+              const idx = allEnquiries.findIndex(e => e.id === id);
+              if (idx !== -1) {
+                allEnquiries[idx] = { ...allEnquiries[idx], ...savedItem };
+              }
+            } else if (savedItem) {
+              allEnquiries.unshift(savedItem);
             }
-            renderEnquiries();
-            updateBadges();
-            fetchActivity();
+          } else {
+            // Local fallback
+            if (id) {
+              const item = allEnquiries.find(e => e.id === id);
+              if (item) Object.assign(item, payload);
+            } else {
+              allEnquiries.unshift({ ...payload, id: 'enq-' + Date.now(), timestamp: new Date().toISOString() });
+            }
           }
         } catch (err) {
-          console.error('Error updating enquiry notes:', err);
+          console.warn('Network error saving lead, falling back to local state:', err);
+          if (id) {
+            const item = allEnquiries.find(e => e.id === id);
+            if (item) Object.assign(item, payload);
+          } else {
+            allEnquiries.unshift({ ...payload, id: 'enq-' + Date.now(), timestamp: new Date().toISOString() });
+          }
+        } finally {
+          btnSaveEnquiryNotes.disabled = false;
+          btnSaveEnquiryNotes.innerHTML = originalBtnHtml;
         }
+
+        // Keep localStorage updated
+        try {
+          localStorage.setItem('mohalkar_enquiries', JSON.stringify(allEnquiries));
+        } catch (e) {}
+
+        // Safely hide modal
+        const modalEl = document.getElementById('enquiryModal');
+        if (window.bootstrap) {
+          const modal = bootstrap.Modal.getInstance(modalEl) || enquiryModalInstance;
+          modal?.hide();
+        }
+
+        renderEnquiries();
+        updateBadges();
+        fetchActivity();
+        showToast(id ? `Lead for "${name}" updated successfully.` : `New client lead "${name}" added to CRM.`, 'success');
       });
     }
 

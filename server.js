@@ -144,17 +144,49 @@ app.post('/api/admin/enquiries', (req, res) => {
 
 app.put('/api/admin/enquiries/:id', (req, res) => {
   const enquiries = readJson('enquiries.json', []);
-  const index = enquiries.findIndex(e => e.id === req.params.id);
-  if (index === -1) {
-    return res.status(404).json({ success: false, error: 'Enquiry not found' });
-  }
   const body = req.body || {};
+  let index = enquiries.findIndex(e => e.id === req.params.id);
+
+  // If not found by ID, attempt match by email or name
+  if (index === -1 && (body.email || body.name)) {
+    index = enquiries.findIndex(e => (body.email && e.email === body.email) || (body.name && e.name === body.name));
+  }
+
+  // If still not found, upsert as a new enquiry record (never 404)
+  if (index === -1) {
+    const newLead = {
+      id: req.params.id || ('enq-' + Date.now()),
+      name: body.name || 'Anonymous Client',
+      email: body.email || '',
+      phone: body.phone || '',
+      location: body.location || 'Maharashtra',
+      type: body.type || 'residential',
+      budget: body.budget || 'Not specified',
+      source: body.source || 'Admin Entry',
+      message: body.message || '',
+      status: body.status || 'new',
+      notes: body.notes || '',
+      timestamp: body.timestamp || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    enquiries.unshift(newLead);
+    writeJson('enquiries.json', enquiries);
+    logActivity('Lead Saved', `Saved details for ${newLead.name}`, body.actor || 'Admin', 'primary');
+    return res.json({ success: true, data: newLead });
+  }
+
   const oldStatus = enquiries[index].status;
-  enquiries[index] = { ...enquiries[index], ...body, updatedAt: new Date().toISOString() };
+  enquiries[index] = {
+    ...enquiries[index],
+    ...body,
+    updatedAt: new Date().toISOString()
+  };
   writeJson('enquiries.json', enquiries);
 
   if (body.status && body.status !== oldStatus) {
     logActivity('Lead Status Changed', `${enquiries[index].name} marked as ${body.status.toUpperCase()}`, body.actor || 'Admin', 'warning');
+  } else {
+    logActivity('Lead Dossier Updated', `Updated details for ${enquiries[index].name}`, body.actor || 'Admin', 'info');
   }
   res.json({ success: true, data: enquiries[index] });
 });
@@ -171,10 +203,51 @@ app.delete('/api/admin/enquiries/:id', (req, res) => {
   res.json({ success: true });
 });
 
-// Projects Management
+// ── Public Projects API (Consumed by live website projects.html) ──
+app.get('/api/projects', (req, res) => {
+  const projects = readJson('projects.json', []);
+  const showAll = req.query.all === 'true';
+  const data = showAll ? projects : projects.filter(p => p.status !== 'draft');
+  res.json({ success: true, count: data.length, data });
+});
+
+// ── Projects Management ──
 app.get('/api/admin/projects', (req, res) => {
   const projects = readJson('projects.json', []);
   res.json({ success: true, count: projects.length, data: projects });
+});
+
+app.put('/api/admin/projects/:id', (req, res) => {
+  let projects = readJson('projects.json', []);
+  const p = req.body || {};
+  const id = req.params.id || p.id;
+  const idx = projects.findIndex(item => item.id === id);
+
+  if (idx !== -1) {
+    projects[idx] = { ...projects[idx], ...p, id, updatedAt: new Date().toISOString() };
+    writeJson('projects.json', projects);
+    logActivity('Project Updated', `Modified portfolio item "${projects[idx].title}"`, p.actor || 'Admin', 'info');
+    return res.json({ success: true, data: projects[idx] });
+  }
+
+  // If not found, create it
+  const newProj = {
+    id: id || ('proj-' + Date.now()),
+    title: p.title || 'Untitled Project',
+    category: p.category || 'architecture',
+    location: p.location || 'Maharashtra',
+    tag: p.tag || (p.category ? p.category.charAt(0).toUpperCase() + p.category.slice(1) : 'Architecture'),
+    label: p.label || 'Professional',
+    image: p.image || '/images/arc2.jpg',
+    status: p.status || 'published',
+    scope: p.scope || '',
+    scale: p.scale || '',
+    createdAt: new Date().toISOString()
+  };
+  projects.unshift(newProj);
+  writeJson('projects.json', projects);
+  logActivity('New Project Published', `Added "${newProj.title}" to portfolio`, p.actor || 'Admin', 'success');
+  res.status(201).json({ success: true, data: newProj });
 });
 
 app.post('/api/admin/projects', (req, res) => {
@@ -195,7 +268,7 @@ app.post('/api/admin/projects', (req, res) => {
     title: p.title || 'Untitled Project',
     category: p.category || 'architecture',
     location: p.location || 'Maharashtra',
-    tag: p.tag || 'Architecture',
+    tag: p.tag || (p.category ? p.category.charAt(0).toUpperCase() + p.category.slice(1) : 'Architecture'),
     label: p.label || 'Professional',
     image: p.image || '/images/arc2.jpg',
     status: p.status || 'published',

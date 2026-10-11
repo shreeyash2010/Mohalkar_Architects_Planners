@@ -311,6 +311,10 @@
               <button type="button" id="btnExportExcel" class="btn btn-outline-gold">
                 <i class="bi bi-file-earmark-excel-fill me-1"></i> Export Excel (.xlsx)
               </button>
+
+              <button type="button" id="btnAddNewLead" class="btn btn-gold-solid">
+                <i class="bi bi-person-plus-fill me-1"></i> Add New Lead
+              </button>
             </div>
           </div>
         </div>
@@ -553,43 +557,51 @@
     </div>
   </div>
 
-  <!-- Enquiry Details Modal -->
+  <!-- Enquiry Details & Edit Modal -->
   <div class="modal fade" id="enquiryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content admin-modal-content">
         <div class="modal-header admin-modal-header">
-          <h5 class="modal-title text-white font-serif">Client Lead Dossier</h5>
+          <h5 class="modal-title text-white font-serif" id="enquiryModalTitle">Client Lead Dossier</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">
           <input type="hidden" id="modalEnqId" />
-          <div class="row g-4 mb-4">
+          
+          <div class="row g-3 mb-3">
             <div class="col-md-6">
-              <div class="p-3 rounded border border-secondary-subtle bg-dark">
-                <div class="text-muted small">Client Name</div>
-                <h5 class="text-white fw-bold mb-2" id="modalEnqName"></h5>
-                <div class="text-light small mb-1"><i class="bi bi-envelope text-gold me-2"></i><span id="modalEnqEmail"></span></div>
-                <div class="text-light small mb-1"><i class="bi bi-telephone text-gold me-2"></i><span id="modalEnqPhone"></span></div>
-                <div class="text-light small"><i class="bi bi-geo-alt text-gold me-2"></i><span id="modalEnqLocation"></span></div>
-              </div>
+              <label class="form-label text-muted small fw-semibold">Client Name *</label>
+              <input type="text" id="modalEnqNameInput" class="form-control admin-input" placeholder="e.g. Dr. Vikram Patil" required />
             </div>
             <div class="col-md-6">
-              <div class="p-3 rounded border border-secondary-subtle bg-dark">
-                <div class="text-muted small">Project Scope &amp; Budget</div>
-                <div class="text-white fw-bold text-capitalize mb-2" id="modalEnqType"></div>
-                <div class="text-gold fw-bold mb-2">Estimated Budget: <span id="modalEnqBudget"></span></div>
-                <div class="text-muted small">Received on: <span id="modalEnqDate"></span></div>
-              </div>
+              <label class="form-label text-muted small fw-semibold">Phone Number *</label>
+              <input type="text" id="modalEnqPhoneInput" class="form-control admin-input" placeholder="e.g. +91 98220 14589" required />
             </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="form-label text-muted small fw-semibold">Client Inquiry Message</label>
-            <div class="p-3 rounded border border-secondary-subtle bg-dark text-light" id="modalEnqMessage" style="white-space: pre-line;"></div>
-          </div>
-
-          <div class="row g-3">
             <div class="col-md-6">
+              <label class="form-label text-muted small fw-semibold">Email Address</label>
+              <input type="email" id="modalEnqEmailInput" class="form-control admin-input" placeholder="e.g. client@gmail.com" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label text-muted small fw-semibold">Project Location *</label>
+              <input type="text" id="modalEnqLocationInput" class="form-control admin-input" placeholder="e.g. Pune, Maharashtra" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label text-muted small fw-semibold">Project Domain / Type</label>
+              <select id="modalEnqTypeSelect" class="form-select admin-select">
+                <option value="residential">Residential Architecture</option>
+                <option value="commercial">Commercial Design</option>
+                <option value="interior">Turnkey Interiors</option>
+                <option value="urban-planning">Urban &amp; Master Planning</option>
+                <option value="industrial">Industrial Facilities</option>
+                <option value="landscape">Landscape Design</option>
+                <option value="consultation">Design Consultation</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label text-muted small fw-semibold">Estimated Budget</label>
+              <input type="text" id="modalEnqBudgetInput" class="form-control admin-input" placeholder="e.g. 50L-1Cr, 1-5Cr" />
+            </div>
+            <div class="col-md-4">
               <label class="form-label text-muted small fw-semibold">Lead Pipeline Stage</label>
               <select id="modalEnqStatus" class="form-select admin-select">
                 <option value="new">● New (Uncontacted)</option>
@@ -599,23 +611,37 @@
                 <option value="closed">● Closed</option>
               </select>
             </div>
-            <div class="col-md-6 d-flex align-items-end gap-2">
-              <a id="modalEnqWhatsAppBtn" href="#" target="_blank" class="btn btn-success flex-grow-1">
-                <i class="bi bi-whatsapp me-1"></i> WhatsApp
-              </a>
-              <a id="modalEnqMailBtn" href="#" class="btn btn-outline-light flex-grow-1">
-                <i class="bi bi-envelope me-1"></i> Send Email
-              </a>
+          </div>
+
+          <div class="mb-3" id="modalEnqMetaRow">
+            <div class="d-flex justify-content-between align-items-center p-2 rounded bg-dark border border-secondary-subtle small text-muted flex-wrap gap-2">
+              <span><i class="bi bi-clock me-1 text-gold"></i>Received: <strong class="text-white" id="modalEnqDate">Today</strong></span>
+              <div class="d-flex gap-2">
+                <a id="modalEnqWhatsAppBtn" href="#" target="_blank" class="btn btn-sm btn-outline-success px-2 py-1">
+                  <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                </a>
+                <a id="modalEnqMailBtn" href="#" class="btn btn-sm btn-outline-light px-2 py-1">
+                  <i class="bi bi-envelope me-1"></i> Email
+                </a>
+              </div>
             </div>
-            <div class="col-12">
-              <label class="form-label text-muted small fw-semibold">Internal Studio Notes</label>
-              <textarea id="modalEnqNotes" class="form-control admin-input" rows="3" placeholder="Add follow-up notes, site visit dates, or quotation details..."></textarea>
-            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted small fw-semibold">Client Inquiry Message / Brief</label>
+            <textarea id="modalEnqMessageInput" class="form-control admin-input" rows="3" placeholder="Client's architectural requirements, area, or description..."></textarea>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label text-muted small fw-semibold">Internal Studio Notes</label>
+            <textarea id="modalEnqNotes" class="form-control admin-input" rows="3" placeholder="Add follow-up notes, site visit dates, or quotation details..."></textarea>
           </div>
         </div>
         <div class="modal-footer admin-modal-footer">
-          <button type="button" class="btn btn-dark-subtle" data-bs-dismiss="modal">Close</button>
-          <button type="button" id="btnSaveEnquiryNotes" class="btn btn-gold-solid">Save Updates</button>
+          <button type="button" class="btn btn-dark-subtle" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id="btnSaveEnquiryNotes" class="btn btn-gold-solid">
+            <i class="bi bi-check2-circle me-1"></i> Save Lead
+          </button>
         </div>
       </div>
     </div>

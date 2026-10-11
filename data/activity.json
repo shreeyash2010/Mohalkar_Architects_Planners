@@ -1,5 +1,53 @@
 [
   {
+    "id": "act-1791715294440",
+    "action": "Project Updated",
+    "details": "Modified portfolio item \"undefined\"",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:41:34.441Z",
+    "badge": "info"
+  },
+  {
+    "id": "act-1791715284538",
+    "action": "Project Updated",
+    "details": "Modified portfolio item \"undefined\"",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:41:24.538Z",
+    "badge": "info"
+  },
+  {
+    "id": "act-1791715271864",
+    "action": "Lead Removed",
+    "details": "Deleted lead for Test Lead",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:41:11.864Z",
+    "badge": "danger"
+  },
+  {
+    "id": "act-1791715264273",
+    "action": "Lead Saved",
+    "details": "Saved details for Test Lead",
+    "user": "Admin",
+    "timestamp": "2026-10-11T10:41:04.273Z",
+    "badge": "primary"
+  },
+  {
+    "id": "act-1791714753921",
+    "action": "Project Updated",
+    "details": "Modified portfolio item \"Havle Design 1\"",
+    "user": "Ar. Abhishek Mohalkar",
+    "timestamp": "2026-10-11T10:32:33.921Z",
+    "badge": "info"
+  },
+  {
+    "id": "act-1791714741896",
+    "action": "Admin Authentication",
+    "details": "Successful login for Ar. Abhishek Mohalkar (Super Admin)",
+    "user": "Ar. Abhishek Mohalkar",
+    "timestamp": "2026-10-11T10:32:21.896Z",
+    "badge": "success"
+  },
+  {
     "id": "act-1791701789147",
     "action": "Admin Authentication",
     "details": "Successful login for Ar. Abhishek Mohalkar (Super Admin)",

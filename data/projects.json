@@ -8,7 +8,10 @@
     "title": "Havle Design 1",
     "location": "Rajastan",
     "status": "published",
-    "createdAt": "2026-10-07T06:51:51.094Z"
+    "createdAt": "2026-10-07T06:51:51.094Z",
+    "scope": "",
+    "actor": "Ar. Abhishek Mohalkar",
+    "updatedAt": "2026-10-11T10:41:34.440Z"
   },
   {
     "id": "proj-2",

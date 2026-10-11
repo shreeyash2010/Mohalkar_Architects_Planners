@@ -36,54 +36,96 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* ── STATS COUNTER ───────────────── */
+  /* ── STATS COUNTER WITH FLUID EASING ──── */
   const statNumbers = document.querySelectorAll('.stat-number[data-target]');
   let statsAnimated = false;
 
   function animateStats() {
-    statNumbers.forEach(el => {
-      const target = +el.dataset.target;
-      const duration = 1800;
-      const step = target / (duration / 16);
-      let current = 0;
-      const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          current = target;
-          clearInterval(timer);
-        }
-        el.textContent = Math.floor(current);
-      }, 16);
-    });
+    if (statsAnimated) return;
     statsAnimated = true;
-  }
 
-  const statsSection = document.querySelector('.stats-section');
-  if (statsSection) {
-    const statsObs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !statsAnimated) {
-        animateStats();
-        statsObs.disconnect();
+    statNumbers.forEach((el, index) => {
+      const target = parseFloat(el.dataset.target) || 0;
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800; // ms
+      const startDelay = index * 120; // Stagger start with card reveal
+      const startTime = performance.now() + startDelay;
+
+      function updateCounter(now) {
+        if (now < startTime) {
+          requestAnimationFrame(updateCounter);
+          return;
+        }
+
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Cubic ease-out curve for luxury deceleration
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentVal = Math.round(easeOut * target);
+
+        el.textContent = currentVal + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        } else {
+          el.textContent = target + suffix;
+        }
       }
-    }, { threshold: 0.3 });
-    statsObs.observe(statsSection);
+
+      requestAnimationFrame(updateCounter);
+    });
   }
 
-  /* ── REVEAL ANIMATIONS ───────────── */
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  if (revealEls.length) {
-    const revealObs = new IntersectionObserver((entries) => {
+  /* ── STATS INTERSECTION OBSERVER ──────── */
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection && 'IntersectionObserver' in window) {
+    const statsObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const delay = entry.target.dataset.delay || 0;
-          setTimeout(() => {
-            entry.target.classList.add('revealed');
-          }, +delay);
-          revealObs.unobserve(entry.target);
+        if (entry.isIntersecting && !statsAnimated) {
+          animateStats();
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-    revealEls.forEach(el => revealObs.observe(el));
+    }, {
+      threshold: 0.25,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    statsObserver.observe(statsSection);
+  } else if (statsSection) {
+    animateStats();
+  }
+
+  /* ── SCROLL-BASED REVEAL OBSERVER ─────── */
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if (revealEls.length && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || '0', 10);
+
+          if (delay > 0) {
+            setTimeout(() => {
+              el.classList.add('revealed');
+            }, delay);
+          } else {
+            el.classList.add('revealed');
+          }
+
+          observer.unobserve(el);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    // Fallback if IntersectionObserver not available
+    revealEls.forEach(el => el.classList.add('revealed'));
   }
 
   /* ── SHOW MORE PROJECTS ──────────── */
