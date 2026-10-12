@@ -59,21 +59,24 @@
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="contact-card">
+            <div class="contact-icon text-success"><i class="bi bi-whatsapp"></i></div>
+            <h6 class="contact-type">WhatsApp</h6>
+            <a href="https://wa.me/919146079235?text=Hello%20Mohalkar%20Architects,%20I%20would%20like%20to%20discuss%20a%20new%20project%20and%20request%20your%20brochure." target="_blank" rel="noopener noreferrer" class="contact-val text-success fw-semibold">Chat: +91 9146079235</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="contact-card">
             <div class="contact-icon"><i class="bi bi-instagram"></i></div>
             <h6 class="contact-type">Instagram</h6>
             <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" class="contact-val">@abhi_mohalkar</a>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="contact-card">
-            <div class="contact-icon"><i class="bi bi-linkedin"></i></div>
-            <h6 class="contact-type">LinkedIn</h6>
-            <a href="https://linkedin.com/in/" target="_blank" class="contact-val">linkedin.com/in/<br>yourprofile</a>
-          </div>
-        </div>
       </div>
-      <div class="text-center mt-5">
+      <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap mt-5">
         <a href="/enquiry.html" class="btn btn-gold px-5 py-3">Send an Enquiry &nbsp;<i class="bi bi-arrow-right"></i></a>
+        <a href="/Mohalkar-Architects-and-Planners-Brochure.pdf" download="Mohalkar-Architects-and-Planners-Brochure.pdf" target="_blank" class="btn btn-outline-warning px-4 py-3 text-gold border-gold">
+          <i class="bi bi-file-earmark-pdf-fill me-2"></i>Download Brochure
+        </a>
       </div>
     </div>
   </section>`;
@@ -101,7 +104,8 @@
             <li><a href="/expertise.html">Expertise</a></li>
             <li><a href="/services.html">Services</a></li>
             <li><a href="/projects.html">Projects</a></li>
-            <li><a href="/enquiry.html">Contact</a></li>
+            <li><a href="/enquiry.html">Contact &amp; Enquiry</a></li>
+            <li><a href="/Mohalkar-Architects-and-Planners-Brochure.pdf" download="Mohalkar-Architects-and-Planners-Brochure.pdf" target="_blank" class="text-gold"><i class="bi bi-file-earmark-pdf-fill me-1"></i>Download Brochure</a></li>
             <li><a href="/admin.html">Admin Portal</a></li>
           </ul>
         </div>

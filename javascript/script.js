@@ -279,6 +279,9 @@ document.addEventListener('DOMContentLoaded', function () {
         : 'Not specified';
       const budgetLabel = enquiryData.budget || 'Not specified';
 
+      const origin = window.location.origin;
+      const brochureUrl = `${origin}/Mohalkar-Architects-and-Planners-Brochure.pdf`;
+
       const whatsappText =
 `*New Project Enquiry — Mohalkar Architects & Planners*
 
@@ -288,9 +291,13 @@ document.addEventListener('DOMContentLoaded', function () {
 *Project Location:* ${enquiryData.location}
 *Project Type:* ${typeLabel}
 *Estimated Budget:* ${budgetLabel}
+*Lead Source:* ${enquiryData.source || 'Website Enquiry'}
 
 *Project Details & Brief:*
 ${enquiryData.message}
+
+*Studio Brochure Reference:*
+${brochureUrl}
 `;
 
       const whatsappUrl = `https://wa.me/${studioWhatsAppNumber}?text=${encodeURIComponent(whatsappText)}`;
@@ -312,9 +319,11 @@ ${enquiryData.message}
 
       // Confirmation message with direct link fallback
       enquiryStatus.innerHTML =
-        '<span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Enquiry sent!</span> ' +
+        '<span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Enquiry prepared!</span> ' +
         '<a href="' + whatsappUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-success ms-2 py-1 px-3">' +
-        '<i class="bi bi-whatsapp me-1"></i>Open in WhatsApp</a>';
+        '<i class="bi bi-whatsapp me-1"></i>Send to WhatsApp</a> ' +
+        '<a href="/Mohalkar-Architects-and-Planners-Brochure.pdf" download="Mohalkar-Architects-and-Planners-Brochure.pdf" target="_blank" class="btn btn-sm btn-outline-warning text-gold border-gold ms-1 py-1 px-2">' +
+        '<i class="bi bi-file-earmark-pdf-fill me-1"></i>Brochure</a>';
       enquiryStatus.className = 'enquiry-status success';
 
       // Automatically trigger WhatsApp pre-filled chat
