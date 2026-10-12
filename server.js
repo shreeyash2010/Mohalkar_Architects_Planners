@@ -328,6 +328,11 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
+// Route /inquiry and /inquiry.html explicitly to enquiry.html
+app.get(['/inquiry', '/inquiry.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'enquiry.html'));
+});
+
 // Serve static assets with automatic .html extension resolution
 app.use(express.static(__dirname, { extensions: ['html'] }));
 

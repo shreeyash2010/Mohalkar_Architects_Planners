@@ -87,81 +87,126 @@
       <!-- LEFT: Contact info panel -->
       <div class="col-lg-4" data-reveal="left">
         <div class="enquiry-info-panel">
-          <span class="section-label">Direct Contact</span>
-          <h2 class="section-heading" style="font-size:clamp(1.8rem,3vw,2.4rem); margin-bottom:2rem;">We'd Love to<br>Hear From You</h2>
+          
+          <!-- Panel Header with live status badge -->
+          <div class="eq-panel-header">
+            <div class="eq-label-bar">
+              <span class="section-label mb-0">Direct Contact</span>
+              <span class="eq-live-status">
+                <span class="eq-live-dot"></span> Studio Open
+              </span>
+            </div>
+            <h2 class="section-heading eq-panel-title">We'd Love to<br>Hear From You</h2>
+            <p class="eq-panel-subtitle">Connect directly with principal architects for project inquiries, consultations, or collaborations.</p>
+          </div>
 
-          <div class="eq-info-item">
-            <div class="eq-info-icon"><i class="bi bi-telephone-fill"></i></div>
-            <div>
-              <p class="eq-info-label">Phone</p>
-              <a href="tel:+919146079235" class="eq-info-val">+91 9146079235</a>
+          <!-- Contact items list -->
+          <div class="eq-contact-list">
+            
+            <!-- PHONE ITEM -->
+            <div class="eq-info-item">
+              <div class="eq-info-icon"><i class="bi bi-telephone-fill"></i></div>
+              <div class="eq-info-content">
+                <div class="eq-info-label">
+                  <span>Direct Phone</span>
+                  <span class="eq-badge-fast">Primary</span>
+                </div>
+                <a href="tel:+919146079235" class="eq-info-val">+91 91460 79235</a>
+                <div class="eq-micro-actions">
+                  <a href="tel:+919146079235" class="eq-action-pill call-btn"><i class="bi bi-telephone-outbound"></i> Call</a>
+                  <a href="https://wa.me/919146079235?text=Hello%20Mohalkar%20Architects,%20I%20would%20like%20to%20inquire%20about%20a%20project." target="_blank" rel="noopener noreferrer" class="eq-action-pill whatsapp-btn"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                  <button type="button" class="eq-action-pill copy-btn" data-copy="+919146079235" title="Copy phone number"><i class="bi bi-clipboard"></i> Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMAIL ITEM -->
+            <div class="eq-info-item">
+              <div class="eq-info-icon"><i class="bi bi-envelope-fill"></i></div>
+              <div class="eq-info-content">
+                <div class="eq-info-label">
+                  <span>Official Email</span>
+                  <span class="eq-badge-fast">24h Reply</span>
+                </div>
+                <a href="mailto:mohalkararchitectsandplanners@gmail.com" class="eq-info-val eq-email-val">mohalkararchitectsandplanners@gmail.com</a>
+                <div class="eq-micro-actions">
+                  <a href="mailto:mohalkararchitectsandplanners@gmail.com" class="eq-action-pill mail-btn"><i class="bi bi-send"></i> Compose</a>
+                  <button type="button" class="eq-action-pill copy-btn" data-copy="mohalkararchitectsandplanners@gmail.com" title="Copy email address"><i class="bi bi-clipboard"></i> Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- STUDIO HUBS ITEM -->
+            <div class="eq-info-item">
+              <div class="eq-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+              <div class="eq-info-content">
+                <div class="eq-info-label">
+                  <span>Studio Locations</span>
+                  <a href="https://www.google.com/maps/place/Mohalkar+Architects+%26+Planners/@18.4579595,75.6589568,17z/data=!3m1!4b1!4m9!1m2!10m1!1e2!3m5!1s0xade94e4662cd739b:0xe81c7bd700734a53!8m2!3d18.4579544!4d75.6615317!16s%2Fg%2F11p19rx8w9?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="eq-badge-fast" style="text-decoration:none;" title="Open in Google Maps">
+                    <i class="bi bi-geo-alt-fill text-gold me-1"></i>Google Maps
+                  </a>
+                </div>
+                <a href="https://www.google.com/maps/place/Mohalkar+Architects+%26+Planners/@18.4579595,75.6589568,17z/data=!3m1!4b1!4m9!1m2!10m1!1e2!3m5!1s0xade94e4662cd739b:0xe81c7bd700734a53!8m2!3d18.4579544!4d75.6615317!16s%2Fg%2F11p19rx8w9?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="eq-info-val eq-map-link text-decoration-none">
+                  Mohalkar Architects &amp; Planners · Maharashtra
+                </a>
+                <div class="eq-locations-wrap">
+                  <a href="https://www.google.com/maps/place/Mohalkar+Architects+%26+Planners/@18.4579595,75.6589568,17z/data=!3m1!4b1!4m9!1m2!10m1!1e2!3m5!1s0xade94e4662cd739b:0xe81c7bd700734a53!8m2!3d18.4579544!4d75.6615317!16s%2Fg%2F11p19rx8w9?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="eq-loc-chip primary-hub text-decoration-none" title="Open Google Maps location">
+                    <i class="bi bi-geo-alt-fill me-1"></i>Maps Pin: Dharashiv
+                  </a>
+                  <span class="eq-loc-chip"><i class="bi bi-building me-1"></i>HQ: Pune</span>
+                  <span class="eq-loc-chip">Thane</span>
+                </div>
+                <div class="eq-micro-actions mt-2">
+                  <a href="https://www.google.com/maps/place/Mohalkar+Architects+%26+Planners/@18.4579595,75.6589568,17z/data=!3m1!4b1!4m9!1m2!10m1!1e2!3m5!1s0xade94e4662cd739b:0xe81c7bd700734a53!8m2!3d18.4579544!4d75.6615317!16s%2Fg%2F11p19rx8w9?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="eq-action-pill map-btn">
+                    <i class="bi bi-geo-alt-fill text-gold"></i> Open Studio Location on Google Maps
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- WORKING HOURS ITEM -->
+            <div class="eq-info-item">
+              <div class="eq-info-icon"><i class="bi bi-clock-fill"></i></div>
+              <div class="eq-info-content">
+                <div class="eq-info-label">Studio Hours</div>
+                <span class="eq-info-val">Mon – Sat · 10:00 AM – 7:00 PM</span>
+                <div class="eq-timing-badge">
+                  <i class="bi bi-check2-circle text-success"></i> Sunday by Prior Appointment (IST)
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Social Channels -->
+          <div class="eq-social">
+            <p class="eq-social-heading">Follow &amp; Connect</p>
+            <div class="eq-social-grid">
+              <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" rel="noopener noreferrer" class="eq-social-link insta" title="Follow on Instagram (@abhi_mohalkar)"><i class="bi bi-instagram"></i></a>
+              <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="eq-social-link linkedin" title="Connect on LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a href="https://wa.me/919146079235?text=Hello%20Mohalkar%20Architects,%20I%20would%20like%20to%20discuss%20a%20project!" target="_blank" rel="noopener noreferrer" class="eq-social-link whatsapp" title="Chat on WhatsApp"><i class="bi bi-whatsapp"></i></a>
+              <a href="mailto:mohalkararchitectsandplanners@gmail.com" class="eq-social-link mail" title="Email Studio"><i class="bi bi-envelope"></i></a>
             </div>
           </div>
 
-          <div class="eq-info-item">
-            <div class="eq-info-icon"><i class="bi bi-envelope-fill"></i></div>
-            <div>
-              <p class="eq-info-label">Email</p>
-              <a href="mailto:mohalkararchitectsandplanners@gmail.com" class="eq-info-val">mohalkararchitectsandplanners@gmail.com</a>
-            </div>
-          </div>
 
-          <div class="eq-info-item">
-            <div class="eq-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
-            <div>
-              <p class="eq-info-label">Studio</p>
-              <span class="eq-info-val">(Pune,Thane&Dharashiv), Maharashtra, India</span>
-            </div>
-          </div>
 
-          <div class="eq-info-item">
-            <div class="eq-info-icon"><i class="bi bi-clock-fill"></i></div>
-            <div>
-              <p class="eq-info-label">Working Hours</p>
-              <span class="eq-info-val">Mon – Sat · 10 AM – 7 PM</span>
-            </div>
-          </div>
-
-          <div class="eq-social mt-4">
-            <p class="eq-info-label mb-2">Follow Our Work</p>
-            <div class="d-flex gap-3">
-              <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" class="eq-social-btn"><i class="bi bi-instagram"></i></a>
-              <a href="https://linkedin.com/in/" target="_blank" class="eq-social-btn"><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-
-          <!-- Studio Brochure Download Feature Card -->
-          <div class="p-3 mt-4 rounded border border-warning-subtle" style="background: rgba(212,175,55,0.08);">
-            <div class="d-flex align-items-center gap-2 mb-2">
-              <i class="bi bi-file-earmark-pdf-fill text-gold fs-4"></i>
-              <h6 class="mb-0 text-white fw-bold">Official Studio Brochure</h6>
-            </div>
-            <p class="text-secondary small mb-3">Download our full studio presentation, practice philosophy, leadership profiles, and completed signature projects portfolio.</p>
-            <div class="d-flex flex-column gap-2">
-              <a href="/Mohalkar-Architects-and-Planners-Brochure.pdf" download="Mohalkar-Architects-and-Planners-Brochure.pdf" target="_blank" class="btn btn-gold btn-sm w-100 text-center py-2">
-                <i class="bi bi-download me-1"></i>Download Brochure PDF
-              </a>
-              <a href="https://wa.me/919146079235?text=Hello%20Mohalkar%20Architects,%20please%20send%20me%20your%20latest%20portfolio%20brochure%20and%20project%20details." target="_blank" rel="noopener noreferrer" class="btn btn-outline-success btn-sm w-100 text-center py-2">
-                <i class="bi bi-whatsapp me-1"></i>Request on WhatsApp
-              </a>
-            </div>
-          </div>
-
-          <!-- Stats mini -->
-          <div class="eq-stats-row mt-4">
+          <!-- Stats Mini Grid -->
+          <div class="eq-stats-row">
             <div class="eq-stat">
               <div class="eq-stat-num">24h</div>
-              <div class="eq-stat-txt">Response Time</div>
+              <div class="eq-stat-txt">Fast Reply</div>
             </div>
             <div class="eq-stat">
               <div class="eq-stat-num">25+</div>
-              <div class="eq-stat-txt">Projects Done</div>
+              <div class="eq-stat-txt">Projects</div>
             </div>
             <div class="eq-stat">
-              <div class="eq-stat-num">5+</div>
-              <div class="eq-stat-txt">Cities Served</div>
+              <div class="eq-stat-num">3</div>
+              <div class="eq-stat-txt">Studio Hubs</div>
             </div>
           </div>
+
         </div>
       </div>
 

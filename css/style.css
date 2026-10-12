@@ -754,17 +754,155 @@ a.contact-val:hover { color: var(--gold); }
 .footer-links a:hover { color: var(--gold); }
 .footer-contact-line {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 11px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
-.footer-contact-line i { color: var(--gold); }
+.footer-contact-line i {
+  color: var(--gold);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.footer-contact-line a,
+.footer-contact-link,
+a.footer-contact-link {
+  color: rgba(255, 255, 255, 0.65) !important;
+  text-decoration: none !important;
+  transition: color var(--transition);
+  word-break: break-word;
+}
+.footer-contact-line a:visited,
+.footer-contact-link:visited,
+a.footer-contact-link:visited {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+.footer-contact-line a:hover,
+.footer-contact-line a:focus,
+.footer-contact-link:hover,
+.footer-contact-link:focus,
+a.footer-contact-link:hover,
+a.footer-contact-link:focus {
+  color: var(--gold) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+/* ── DIGITAL ARCHITECTURE & WEB EXPERIENCE PARTNER ── */
+.footer-partner-blend {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 18px;
+  padding-top: 14px;
+}
+.footer-partner-title {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+.footer-partner-sub {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.footer-partner-sub .crafted-txt {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.82rem;
+}
+.footer-studio-link {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all var(--transition);
+}
+.footer-studio-link:hover {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer-studio-link i {
+  font-size: 0.72rem;
+  transition: transform var(--transition);
+}
+.footer-studio-link:hover i {
+  transform: translate(2px, -2px);
+}
+
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.07);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 30px;
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.45);
 }
 .footer-bottom strong { color: var(--gold); }
+.footer-craft-credit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+.footer-craft-credit .credit-role {
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: 0.3px;
+}
+.footer-craft-credit .credit-dot {
+  color: rgba(255, 255, 255, 0.2);
+}
+.footer-craft-credit .credit-by {
+  color: rgba(255, 255, 255, 0.45);
+}
+.footer-craft-credit .credit-name {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all var(--transition);
+}
+.footer-craft-credit .credit-name:hover {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Partner Pill Banner under Contact Section */
+.partner-pill-banner {
+  background: rgba(18, 18, 18, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all var(--transition);
+}
+.partner-pill-banner:hover {
+  border-color: var(--gold);
+  background: rgba(200, 169, 110, 0.08);
+}
+
+/* Enquiry Page Digital Partner Box */
+.eq-partner-box {
+  background: linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(30,28,24,0.9) 100%);
+  border: 1px solid rgba(200, 169, 110, 0.25);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transition: all var(--transition);
+}
+.eq-partner-box:hover {
+  border-color: var(--gold);
+}
 
 /* ══════════════════════════════════════
    SCROLL TO TOP

@@ -415,10 +415,52 @@ ${brochureUrl}
       if (e.target === profileOverlay) closeProfileModal();
     });
   }
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && profileOverlay?.style.display === 'flex') {
       closeProfileModal();
     }
   });
+
+  /* ── CLIPBOARD COPY INTERACTIONS ──── */
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const textToCopy = this.getAttribute('data-copy');
+      if (!textToCopy) return;
+
+      const performFeedback = () => {
+        const origHTML = this.innerHTML;
+        this.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+        this.classList.add('copied');
+        setTimeout(() => {
+          this.innerHTML = origHTML;
+          this.classList.remove('copied');
+        }, 2200);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(performFeedback).catch(() => {
+          fallbackCopy(textToCopy, performFeedback);
+        });
+      } else {
+        fallbackCopy(textToCopy, performFeedback);
+      }
+    });
+  });
+
+  function fallbackCopy(text, callback) {
+    try {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      if (callback) callback();
+    } catch (err) {
+      console.warn('Copy failed:', err);
+    }
+  }
 
 });
