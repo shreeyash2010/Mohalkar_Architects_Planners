@@ -4,6 +4,16 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ── AOS (ANIMATE ON SCROLL) INITIALIZATION ──── */
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: 900,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 30
+    });
+  }
+
   /* ── NAVBAR scroll effect ─────────── */
   const navbar = document.getElementById('mainNavbar');
   function handleNavScroll() {
@@ -22,19 +32,58 @@ document.addEventListener('DOMContentLoaded', function () {
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
         e.preventDefault();
-        const offset = navbar.offsetHeight + 10;
+        const offset = navbar ? navbar.offsetHeight + 10 : 70;
         window.scrollTo({
           top: target.getBoundingClientRect().top + window.scrollY - offset,
           behavior: 'smooth'
         });
         // Close mobile menu
         const collapse = document.querySelector('#navMenu');
-        if (collapse && collapse.classList.contains('show')) {
+        if (collapse && collapse.classList.contains('show') && typeof bootstrap !== 'undefined') {
           bootstrap.Collapse.getInstance(collapse)?.hide();
         }
       }
     });
   });
+
+  /* ── MOBILE NAVBAR: Smooth auto-close and accessibility ──── */
+  const navMenuEl = document.getElementById('navMenu');
+  if (navMenuEl) {
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function (e) {
+      if (navMenuEl.classList.contains('show')) {
+        const toggler = document.querySelector('.navbar-toggler');
+        if (!navMenuEl.contains(e.target) && (!toggler || !toggler.contains(e.target))) {
+          if (typeof bootstrap !== 'undefined') {
+            const bsCollapse = bootstrap.Collapse.getInstance(navMenuEl);
+            if (bsCollapse) bsCollapse.hide();
+          }
+        }
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navMenuEl.classList.contains('show')) {
+        if (typeof bootstrap !== 'undefined') {
+          const bsCollapse = bootstrap.Collapse.getInstance(navMenuEl);
+          if (bsCollapse) bsCollapse.hide();
+        }
+      }
+    });
+
+    // Close when clicking any nav link or CTA on small screens
+    navMenuEl.querySelectorAll('.nav-link, .btn-nav-cta').forEach(link => {
+      link.addEventListener('click', function () {
+        if (window.innerWidth < 992 && navMenuEl.classList.contains('show')) {
+          if (typeof bootstrap !== 'undefined') {
+            const bsCollapse = bootstrap.Collapse.getInstance(navMenuEl);
+            if (bsCollapse) bsCollapse.hide();
+          }
+        }
+      });
+    });
+  }
 
   /* ── STATS COUNTER WITH FLUID EASING ──── */
   const statNumbers = document.querySelectorAll('.stat-number[data-target]');
@@ -461,6 +510,36 @@ ${brochureUrl}
     } catch (err) {
       console.warn('Copy failed:', err);
     }
+  }
+
+  /* ── EQUAL HEIGHT FOR ENQUIRY PANELS IN LANDSCAPE ─── */
+  const eqInfoPanel = document.querySelector('.enquiry-info-panel');
+  const eqFormCard = document.querySelector('.enquiry-form-card');
+  if (eqInfoPanel && eqFormCard) {
+    function syncEnquiryHeights() {
+      eqInfoPanel.style.minHeight = '';
+      eqFormCard.style.minHeight = '';
+
+      const isLandscapeOrDesktop = window.matchMedia('(min-width: 992px), (orientation: landscape) and (min-width: 768px)').matches;
+      if (isLandscapeOrDesktop) {
+        requestAnimationFrame(() => {
+          const infoH = eqInfoPanel.offsetHeight;
+          const formH = eqFormCard.offsetHeight;
+          const maxH = Math.max(infoH, formH);
+          if (maxH > 0) {
+            eqInfoPanel.style.minHeight = `${maxH}px`;
+            eqFormCard.style.minHeight = `${maxH}px`;
+          }
+        });
+      }
+    }
+
+    syncEnquiryHeights();
+    window.addEventListener('resize', syncEnquiryHeights);
+    window.addEventListener('orientationchange', () => {
+      setTimeout(syncEnquiryHeights, 150);
+    });
+    window.addEventListener('load', syncEnquiryHeights);
   }
 
 });

@@ -15,7 +15,7 @@
           <div class="brand-sub">ARCHITECTS &amp; PLANNERS</div>
         </div>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
@@ -26,8 +26,11 @@
           <li class="nav-item"><a class="nav-link" href="/services.html">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="/projects.html">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="/enquiry.html">Contact</a></li>
-          <li class="nav-item ms-lg-3">
-            <a class="btn btn-nav-cta" href="/enquiry.html">Enquire Now</a>
+          <li class="nav-item nav-item-cta ms-lg-3">
+            <a class="btn btn-nav-cta" href="/enquiry.html">
+              <span>Enquire Now</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
           </li>
         </ul>
       </div>
@@ -121,7 +124,7 @@
           <h6 class="footer-col-heading">Contact Us</h6>
           <p class="footer-contact-line">
             <i class="bi bi-geo-alt"></i>
-            <a href="https://www.google.com/maps/place/Mohalkar+Architects+%26+Planners/@18.4579595,75.6589568,17z/data=!3m1!4b1!4m9!1m2!10m1!1e2!3m5!1s0xade94e4662cd739b:0xe81c7bd700734a53!8m2!3d18.4579544!4d75.6615317!16s%2Fg%2F11p19rx8w9?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="footer-contact-link" title="Open Mohalkar Architects &amp; Planners on Google Maps">Studio Locations: Maharashtra, India</a>
+            <a href="https://www.google.com/maps/place/Mohalkar+Architects+%26+Planners/@18.4579595,75.6589568,17z/data=!3m1!4b1!4m9!1m2!10m1!1e2!3m5!1s0xade94e4662cd739b:0xe81c7bd700734a53!8m2!3d18.4579544!4d75.6615317!16s%2Fg%2F11p19rx8w9?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="footer-contact-link" title="Open Mohalkar Architects &amp; Planners on Google Maps">Studio Location: Bhoom, Maharashtra, India</a>
           </p>
           <p class="footer-contact-line">
             <i class="bi bi-telephone"></i>

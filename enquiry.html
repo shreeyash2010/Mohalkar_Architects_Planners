@@ -82,11 +82,11 @@
 <!-- ── ENQUIRY BODY ───────────────────────────── -->
 <section class="inner-section enquiry-section">
   <div class="container-xl">
-    <div class="row g-5 align-items-start">
+    <div class="row g-5 align-items-stretch enquiry-main-row">
 
       <!-- LEFT: Contact info panel -->
-      <div class="col-lg-4" data-reveal="left">
-        <div class="enquiry-info-panel">
+      <div class="col-lg-4 enquiry-col-contact d-flex flex-column" data-reveal="left">
+        <div class="enquiry-info-panel h-100 w-100 d-flex flex-column">
           
           <!-- Panel Header with live status badge -->
           <div class="eq-panel-header">
@@ -211,8 +211,8 @@
       </div>
 
       <!-- RIGHT: Enquiry form -->
-      <div class="col-lg-8" data-reveal="right">
-        <div class="enquiry-form-card">
+      <div class="col-lg-8 enquiry-col-form d-flex flex-column" data-reveal="right">
+        <div class="enquiry-form-card h-100 w-100 d-flex flex-column">
           <div class="mb-4">
             <span class="section-label">Project Enquiry</span>
             <h3 class="section-heading" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">Tell Us About<br>Your Project</h3>
@@ -278,7 +278,7 @@
               </div>
             </div>
 
-            <div class="d-flex align-items-center gap-3 flex-wrap mt-4">
+            <div class="enquiry-form-actions d-flex align-items-center gap-3 flex-wrap mt-4">
               <button type="submit" class="btn btn-gold px-4 py-3">
                 <i class="bi bi-whatsapp me-2 text-success"></i>Send Enquiry to WhatsApp
               </button>
