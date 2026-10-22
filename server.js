@@ -323,14 +323,24 @@ app.post('/api/admin/settings', (req, res) => {
   res.json({ success: true, data: updated });
 });
 
+// SEO: Sitemaps XML endpoint (supports /sitemap.xml, /sitemaps.xml, and /sitmaps.xml)
+app.get(['/sitemap.xml', '/sitemaps.xml', '/sitmaps.xml'], (req, res) => {
+  res.type('application/xml').sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
+// SEO: Robots.txt endpoint
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain').sendFile(path.join(__dirname, 'robots.txt'));
+});
+
 // Route /admin explicitly to admin.html
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
-// Route /inquiry and /inquiry.html explicitly to enquiry.html
+// 301 Canonical redirect for legacy /inquiry routes to /enquiry.html
 app.get(['/inquiry', '/inquiry.html'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'enquiry.html'));
+  res.redirect(301, '/enquiry.html');
 });
 
 // Serve static assets with automatic .html extension resolution

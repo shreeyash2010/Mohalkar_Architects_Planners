@@ -71,7 +71,10 @@
           <div class="contact-card">
             <div class="contact-icon"><i class="bi bi-instagram"></i></div>
             <h6 class="contact-type">Instagram</h6>
-            <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" class="contact-val">@abhi_mohalkar</a>
+            <div class="d-flex flex-column gap-1">
+              <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" rel="noopener noreferrer" class="contact-val">@abhi_mohalkar</a>
+              <a href="https://www.instagram.com/mohalkar_mediahouse/" target="_blank" rel="noopener noreferrer" class="contact-val">@mohalkar_mediahouse</a>
+            </div>
           </div>
         </div>
       </div>
@@ -91,9 +94,10 @@
           <div class="footer-brand-sub">ARCHITECTS &amp; PLANNERS</div>
           <p class="footer-desc mt-3">Designing modern, inspiring spaces for a better tomorrow. Excellence in every line, purpose in every space.</p>
           <div class="footer-social mt-3 d-flex gap-3">
-            <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank"><i class="bi bi-instagram"></i></a>
-            <a href="https://linkedin.com/in/" target="_blank"><i class="bi bi-linkedin"></i></a>
-            <a href="mailto:mohalkararchitectsandplanners@gmail.com"><i class="bi bi-envelope"></i></a>
+            <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" rel="noopener noreferrer" title="Instagram (@abhi_mohalkar)"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.instagram.com/mohalkar_mediahouse/" target="_blank" rel="noopener noreferrer" title="Mohalkar Mediahouse (@mohalkar_mediahouse)"><i class="bi bi-instagram"></i></a>
+            <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="mailto:mohalkararchitectsandplanners@gmail.com" title="Email Us"><i class="bi bi-envelope"></i></a>
           </div>
         </div>
         <div class="col-lg-2 col-6">
@@ -137,6 +141,10 @@
           <p class="footer-contact-line">
             <i class="bi bi-instagram"></i>
             <a href="https://www.instagram.com/abhi_mohalkar/" target="_blank" rel="noopener noreferrer" class="footer-contact-link" title="Visit @abhi_mohalkar on Instagram">@abhi_mohalkar</a>
+          </p>
+          <p class="footer-contact-line">
+            <i class="bi bi-instagram"></i>
+            <a href="https://www.instagram.com/mohalkar_mediahouse/" target="_blank" rel="noopener noreferrer" class="footer-contact-link" title="Visit @mohalkar_mediahouse on Instagram">@mohalkar_mediahouse</a>
           </p>
         </div>
       </div>

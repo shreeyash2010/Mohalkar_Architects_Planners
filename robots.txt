@@ -1,0 +1,24 @@
+# Robots.txt for Mohalkar Architects & Planners
+# Website: https://mohalkararchitects.in
+
+User-agent: *
+Allow: /
+Allow: /about.html
+Allow: /projects.html
+Allow: /services.html
+Allow: /expertise.html
+Allow: /enquiry.html
+Allow: /images/
+Allow: /css/
+Allow: /javascript/
+Allow: /Mohalkar-Architects-and-Planners-Brochure.pdf
+
+# Disallow private management console and internal data
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+
+# XML Sitemaps
+Sitemap: https://mohalkararchitects.in/sitemap.xml
+Sitemap: https://mohalkararchitects.in/sitemaps.xml
