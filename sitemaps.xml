@@ -3,92 +3,92 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Home Page -->
   <url>
-    <loc>https://mohalkararchitects.in/</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/hugo-sousa-BghGseQbAkA-unsplash.jpg</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/hugo-sousa-BghGseQbAkA-unsplash.jpg</image:loc>
       <image:title>Mohalkar Architects &amp; Planners Studio</image:title>
       <image:caption>Signature architectural and urban planning practice founded by Ar. Abhishek Mohalkar</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/logo2.png</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/logo2.png</image:loc>
       <image:title>Mohalkar Architects Official Crest</image:title>
     </image:image>
   </url>
 
   <!-- Projects Portfolio -->
   <url>
-    <loc>https://mohalkararchitects.in/projects.html</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/projects.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/arc1.jpg</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/arc1.jpg</image:loc>
       <image:title>Residential Luxury Villa Architectural Project</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/arc2.jpg</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/arc2.jpg</image:loc>
       <image:title>Contemporary Residential Bungalow Architecture</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/arc3.jpg</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/arc3.jpg</image:loc>
       <image:title>Modern Architectural Landmark Project</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/3d1.png</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/3d1.png</image:loc>
       <image:title>Photorealistic 3D Architectural Visualization</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/interior10.png</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/interior10.png</image:loc>
       <image:title>Bespoke Interior Architecture Design</image:title>
     </image:image>
   </url>
 
   <!-- Services -->
   <url>
-    <loc>https://mohalkararchitects.in/services.html</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/services.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/arc4.jpg</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/arc4.jpg</image:loc>
       <image:title>Comprehensive Architectural Services</image:title>
     </image:image>
   </url>
 
   <!-- About Us -->
   <url>
-    <loc>https://mohalkararchitects.in/about.html</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/about.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/ceo.png</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/ceo.png</image:loc>
       <image:title>Ar. Abhishek Mohalkar - Principal Architect &amp; Founder</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/cmo.png</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/cmo.png</image:loc>
       <image:title>Sujit Mohalkar - CMD, Brand &amp; Growth</image:title>
     </image:image>
   </url>
 
   <!-- Expertise & Practice Domains -->
   <url>
-    <loc>https://mohalkararchitects.in/expertise.html</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/expertise.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://mohalkararchitects.in/images/3d3.png</image:loc>
+      <image:loc>https://mohalkar-architects-planners.vercel.app/images/3d3.png</image:loc>
       <image:title>Architectural Practice Domains &amp; Planning Expertise</image:title>
     </image:image>
   </url>
 
   <!-- Contact & Project Enquiry -->
   <url>
-    <loc>https://mohalkararchitects.in/enquiry.html</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/enquiry.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -96,7 +96,7 @@
 
   <!-- Official Practice Brochure -->
   <url>
-    <loc>https://mohalkararchitects.in/Mohalkar-Architects-and-Planners-Brochure.pdf</loc>
+    <loc>https://mohalkar-architects-planners.vercel.app/Mohalkar-Architects-and-Planners-Brochure.pdf</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>

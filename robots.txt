@@ -1,5 +1,5 @@
 # Robots.txt for Mohalkar Architects & Planners
-# Website: https://mohalkararchitects.in
+# Website: https://mohalkar-architects-planners.vercel.app/
 
 User-agent: *
 Allow: /
@@ -20,5 +20,5 @@ Disallow: /api/
 Disallow: /data/
 
 # XML Sitemaps
-Sitemap: https://mohalkararchitects.in/sitemap.xml
-Sitemap: https://mohalkararchitects.in/sitemaps.xml
+Sitemap: https://mohalkar-architects-planners.vercel.app/sitemap.xml
+Sitemap: https://mohalkar-architects-planners.vercel.app/sitemaps.xml
